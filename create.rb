@@ -30,7 +30,7 @@ def create_subdomain_plesk(subdomain)
 end
 
 def subdomain_exists?(name)
-  File.exists("#{$path}/data/subdomains/#{name}")
+  File.exists?("#{$path}/data/subdomains/#{name}")
 end
   
 def main()
