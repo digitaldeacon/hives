@@ -1,19 +1,17 @@
 echo "Configuring git repository"
-mkdir git
-cd git
-mkdir memberhive
-cd memberhive
+base=`pwd`
+mkdir ${base}/data
+mkdir ${base}/data/git
+mkdir ${base}/data/subdomains
+mkdir ${base}/data/dist
+cd ${base}/data/git
 git init --bare
-cd ../..
-cp hooks/post-receive git/memberhive/hooks
-chmod +x git/memberhive/hooks/post-receive
+cd ${base}
+cp ${base}/hooks/post-receive ${base}/data/git/hooks
+chmod +x ${base}/data/git/hooks/post-receive
 
 if [ ! -f config.json ]
 then
   echo "{}" > config.json
 fi
-a=
 echo "{\"path\":\"`pwd`\"}" > config_local.json
-
-
-mkdir subdomains

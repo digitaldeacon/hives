@@ -1,4 +1,5 @@
 require 'json'
+require 'fileutils'
 
 $config = JSON.parse(File.read('config.json'))
 $config_local = JSON.parse(File.read('config_local.json'))
@@ -6,8 +7,9 @@ $path = $config_local["path"]
 
 def create_site(name)
   puts "creating site #{name}"
-  
- "usr/local/psa/bin/subdomain --create subdomainame -domain domainname -ssi true -php true  -www_root /directoryname"
+  if(not subdomain_exists? name)
+    create_subdomain(name)
+  end
   # create database
   # start docker with loopback
   # create subdomain
@@ -20,16 +22,20 @@ def create_mongodb()
   # create mongodb
 end
 
-def create_static_domain()
-  "usr/local/psa/bin/subdomain --create subdomainame -domain domainname -ssi true -php true  -www_root /directoryname"
-  # create static domain
-  # copy files there
+
+def create_subdomain_plesk(subdomain)
+  domain = "memberhive.com"
+  path = "#{$path}/data/subdomain/#{subdomain}"
+  `/usr/local/psa/bin/subdomain --create #{subdomain} -domain #{domain} -ssi true -php true  -www_root #{path}`
 end
 
-
+def subdomain_exists?(name)
+  File.exists("#{$path}/data/subdomains/#{name}")
+end
+  
 def main()
-  if(not File.exists($path + "/subdomains/static"))
-    create_static_domain()
+  if(not subdomain_exists? "static")
+    create_subdomain_plesk "static"
   end
   $config["sites"].each do |name, config|
     if not $config_local.has_key? "sites" or not $config_local["sites"].has_key? name
