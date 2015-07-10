@@ -1,4 +1,5 @@
 echo "Configuring git repository"
+mkdir git
 cd git
 mkdir memberhive
 cd memberhive
@@ -9,7 +10,10 @@ chmod +x git/memberhive/hooks/post-receive
 
 if [ ! -f config.json ]
 then
-  cat "{}" > config.json
+  echo "{}" > config.json
 fi
+a=
+echo "{\"path\":\"`pwd`\"}" > config_local.json
 
-cat "{}" > config_local.json
+
+mkdir subdomains
