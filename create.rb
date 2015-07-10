@@ -25,7 +25,7 @@ end
 
 def create_subdomain_plesk(subdomain)
   domain = "memberhive.com"
-  path = "#{$path}/data/subdomain/#{subdomain}"
+  path = "#{$path}/data/subdomains/#{subdomain}"
   `sudo /usr/local/psa/bin/subdomain --create #{subdomain} -domain #{domain} -ssi true -php true  -www_root #{path}`
 end
 
