@@ -7,7 +7,7 @@ $path = $config_local["path"]
 def create_site(name)
   puts "creating site #{name}"
   
-
+ "usr/local/psa/bin/subdomain --create subdomainame -domain domainname -ssi true -php true  -www_root /directoryname"
   # create database
   # start docker with loopback
   # create subdomain
@@ -21,7 +21,7 @@ def create_mongodb()
 end
 
 def create_static_domain()
-  
+  "usr/local/psa/bin/subdomain --create subdomainame -domain domainname -ssi true -php true  -www_root /directoryname"
   # create static domain
   # copy files there
 end
