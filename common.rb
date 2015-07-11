@@ -5,10 +5,12 @@ $config = JSON.parse(File.read('config.json'))
 $config_local = JSON.parse(File.read('config_local.json'))
 $path = $config_local["path"]
 
-def path_subdomain(name)
+def plesk_path_subdomain(name)
   "hives/data/subdomains/#{name}"
 end
-
+def path_subdomain(name)
+  "#{$path}/data/subdomains/#{name}"
+end
 def path_dist()
   "#{$path}/data/dist"
 end
@@ -16,7 +18,7 @@ end
 def create_subdomain_plesk(subdomain)
   puts "create subdomain #{subdomain}"
   domain = "memberhive.com"
-  path = path_subdomain(subdomain)
+  path = ples_path_subdomain(subdomain)
   FileUtils.mkpath path
   `sudo /usr/local/psa/bin/subdomain --create #{subdomain} -domain #{domain} -ssi true -php true  -www_root #{path}`
 end
