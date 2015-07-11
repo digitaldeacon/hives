@@ -11,9 +11,6 @@ end
 def path_subdomain(name)
   "#{$path}/data/subdomains/#{name}"
 end
-def path_dist()
-  "#{$path}/data/dist"
-end
 
 def create_subdomain_plesk(subdomain)
   puts "create subdomain #{subdomain}"
