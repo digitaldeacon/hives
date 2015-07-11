@@ -1,4 +1,5 @@
 echo "********************"
 echo "Post receive hook: Updating hives"
 echo "********************"
-ruby ~/update.rb
+
+cd ~ && ruby ~/update.rb
