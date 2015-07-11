@@ -17,3 +17,4 @@ def main()
   end
   write_local_config()
 end
+main()
