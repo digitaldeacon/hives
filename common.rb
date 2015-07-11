@@ -18,7 +18,7 @@ end
 def create_subdomain_plesk(subdomain)
   puts "create subdomain #{subdomain}"
   domain = "memberhive.com"
-  path = ples_path_subdomain(subdomain)
+  path = plesk_path_subdomain(subdomain)
   FileUtils.mkpath path
   `sudo /usr/local/psa/bin/subdomain --create #{subdomain} -domain #{domain} -ssi true -php true  -www_root #{path}`
 end
