@@ -44,12 +44,6 @@ def create_mongodb()
 end
 
 
-def create_subdomain_plesk(subdomain)
-  domain = "memberhive.com"
-  path = path_subdomain(subdomain)
-  `sudo /usr/local/psa/bin/subdomain --create #{subdomain} -domain #{domain} -ssi true -php true  -www_root #{path}`
-end
-
 def subdomain_exists?(name)
   File.exists?(path_subdomain(name))
 end
