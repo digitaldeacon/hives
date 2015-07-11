@@ -1,21 +1,32 @@
 require 'json'
 require 'fileutils'
+require_relative 'common'
 
-$config = JSON.parse(File.read('config.json'))
-$config_local = JSON.parse(File.read('config_local.json'))
-$path = $config_local["path"]
 
 def create_site(name)
   puts "creating site #{name}"
   if(not subdomain_exists? name)
     create_subdomain(name)
   end
-  # create database
+  deploy_port = $config_local.fetch('deploy_port', '8701')
+  web_port = $config_local.fetch('web_port', '10000')
+  
   # start docker with loopback
+  create_server_docker("server_"+name, deploy_port, web_port)
+  
+  $config_local['deploy_port'] = deploy_port+1;
+  $config_local['web_port'] = web_port+1;
+  
+  `cd ${$path}/data/git && slc deploy http://localhost:#{deploy_port} master`
+  # create database
   # create subdomain
   # copy index.html there
   # replace index.html with config
   
+end
+
+def create_server_docker(name, deploy_port, web_port)
+  `sudo docker run  -d --restart=no -p #{deploy_port}:8701 -p #{web_port}:3001 --name #{name} strongloop/strong-pm`
 end
 
 def create_mongodb()
@@ -25,14 +36,14 @@ end
 
 def create_subdomain_plesk(subdomain)
   domain = "memberhive.com"
-  path = "#{$path}/data/subdomains/#{subdomain}"
+  path = path_subdomain(name)
   `sudo /usr/local/psa/bin/subdomain --create #{subdomain} -domain #{domain} -ssi true -php true  -www_root #{path}`
 end
 
 def subdomain_exists?(name)
-  File.exists?("#{$path}/data/subdomains/#{name}")
+  File.exists?(path_subdomain(name))
 end
-  
+
 def main()
   if(not subdomain_exists? "static")
     create_subdomain_plesk "static"
