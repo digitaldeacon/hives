@@ -18,6 +18,14 @@ def create_site(name)
   $config_local['web_port'] = web_port+1;
   
   `cd ${$path}/data/git && slc deploy http://localhost:#{deploy_port} master`
+  
+  $config_local['sites'][name] = 
+      {
+        "deploy_port" =>  deploy_port,
+        "web_port" => web_port,
+        "docker_name" => "server_"+name
+      }
+  
   # create database
   # create subdomain
   # copy index.html there
@@ -53,6 +61,7 @@ def main()
       create_site(name)
     end
   end
+  write_local_config()
 end
 
 main()

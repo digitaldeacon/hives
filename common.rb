@@ -26,3 +26,9 @@ def remove_subdomain_plesk(subdomain)
   domain = "memberhive.com"
   `sudo /usr/local/psa/bin/subdomain --remove #{subdomain} -domain #{domain}`
 end
+
+def write_local_config()
+  File.open("config_local.json","w") do |f|
+    f.write($config_local.to_json)
+  end
+end
