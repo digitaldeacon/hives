@@ -6,7 +6,7 @@ require_relative 'common'
 def create_site(name)
   puts "creating site #{name}"
   if(not subdomain_exists? name)
-    create_subdomain(name)
+    create_subdomain_plesk(name)
   end
   deploy_port = $config_local.fetch('deploy_port', '8701')
   web_port = $config_local.fetch('web_port', '10000')
