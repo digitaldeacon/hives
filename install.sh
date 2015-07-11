@@ -8,7 +8,7 @@ mkdir ${base}/data/code
 
 cd ${base}/data/git
 git init --bare
-git remote origin add ${base}/data/code
+git remote add origin ${base}/data/code
 cd ${base}
 cp ${base}/hooks/post-receive ${base}/data/git/hooks
 chmod +x ${base}/data/git/hooks/post-receive
