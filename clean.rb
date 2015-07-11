@@ -6,5 +6,6 @@ remove_subdomain_plesk("static")
 if $config_local.has_key? "sites"
   $config_local["sites"].each do |name, config|
     remove_subdomain_plesk(name)
+    exe("docker stop #{config['docker_name']} && docker rm #{config['docker_name']}")
   end
 end

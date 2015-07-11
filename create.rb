@@ -17,8 +17,10 @@ def create_site(name)
   $config_local['deploy_port'] = deploy_port+1;
   $config_local['web_port'] = web_port+1;
   
-  exe("cd ${$path}/data/git && slc deploy http://localhost:#{deploy_port} master")
-  
+  exe("cd #{$path}/data/git && slc deploy http://localhost:#{deploy_port} master")
+  if(not $config_local.has_key? 'sites')
+    $config_local['sites'] = {}
+  end
   $config_local['sites'][name] = 
       {
         "deploy_port" =>  deploy_port,
