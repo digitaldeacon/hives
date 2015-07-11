@@ -4,11 +4,11 @@ puts "Update Scripts"
 #exea("cd #{$path}/data/code && git pull origin master")
 
 def update_static()
-  FileUtils.cp_r( "#{$path}/data/dist/", path_subdomain("static"))
+  FileUtils.cp_r("#{$path}/data/dist/", path_subdomain("static"))
 end
 
 def update_sites_index(name)
-  FileUtils.cp_r("#{$path}/data/dist/index.html", path_subdomain("static")+"/index.html")
+  FileUtils.cp("#{$path}/data/dist/index.html", path_subdomain(name)+"/index.html")
 end
 def main()
   update_static()
