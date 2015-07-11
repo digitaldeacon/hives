@@ -34,6 +34,7 @@ def create_site(name)
 end
 
 def create_server_docker(name, deploy_port, web_port)
+  puts "docker run  -d --restart=no -p #{deploy_port}:8701 -p #{web_port}:3001 --name #{name} strongloop/strong-pm"
   `docker run  -d --restart=no -p #{deploy_port}:8701 -p #{web_port}:3001 --name #{name} strongloop/strong-pm`
 end
 
