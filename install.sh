@@ -6,16 +6,18 @@ mkdir ${base}/data/git
 mkdir ${base}/data/subdomains
 mkdir ${base}/data/dist
 mkdir ${base}/data/code
-cd ${base}/data/code
-git init
+
 cd ${base}/data/git
 git init --bare
-git remote add origin ${base}/data/code
-cd ${base}
+
+cd ${base}/data/code
+git init
+git remote add origin ${base}/data/git
+
 cp ${base}/hooks/post-receive ${base}/data/git/hooks
 chmod +x ${base}/data/git/hooks/post-receive
 
-
+cd ${base}
 if [ ! -f config.json ]
 then
   echo "{}" > config.json
