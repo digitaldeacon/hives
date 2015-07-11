@@ -17,7 +17,7 @@ def create_site(name)
   $config_local['deploy_port'] = deploy_port+1;
   $config_local['web_port'] = web_port+1;
   
-  exe("cd #{$path}/data/data && slc deploy http://localhost:#{deploy_port} master")
+  exe("cd #{$path}/data/code && slc deploy http://localhost:#{deploy_port} master")
   if(not $config_local.has_key? 'sites')
     $config_local['sites'] = {}
   end
@@ -36,7 +36,7 @@ def create_site(name)
 end
 
 def create_server_docker(name, deploy_port, web_port)
-  exe("docker run  -d --restart=no -p #{deploy_port}:8701 -p #{web_port}:3001 --name #{name} strongloop/strong-pm")
+  exe("docker run  -d --restart=no -p #{deploy_port}:8701 -p #{web_port}:3001 --name #{name} metaxy/strong-pm")
 end
 
 def create_mongodb()
