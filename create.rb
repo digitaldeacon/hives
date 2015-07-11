@@ -16,7 +16,7 @@ def create_site(name)
   
   $config_local['deploy_port'] = deploy_port+1;
   $config_local['web_port'] = web_port+1;
-  
+  exe("sleep 1")
   exe("cd #{$path}/data/code && slc deploy http://localhost:#{deploy_port} master")
   if(not $config_local.has_key? 'sites')
     $config_local['sites'] = {}
@@ -29,9 +29,6 @@ def create_site(name)
       }
   write_local_config()
   # create database
-  # create subdomain
-  # copy index.html there
-  # replace index.html with config
   
 end
 
