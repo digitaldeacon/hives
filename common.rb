@@ -6,7 +6,7 @@ $config_local = JSON.parse(File.read('config_local.json'))
 $path = $config_local["path"]
 
 def plesk_path_subdomain(name)
-  "hives/data/subdomains/#{name}"
+  "/hives/data/subdomains/#{name}"
 end
 def path_subdomain(name)
   "#{$path}/data/subdomains/#{name}"
@@ -18,9 +18,9 @@ end
 def create_subdomain_plesk(subdomain)
   puts "create subdomain #{subdomain}"
   domain = "memberhive.com"
-  path = plesk_path_subdomain(subdomain)
-  FileUtils.mkpath path
-  `sudo /usr/local/psa/bin/subdomain --create #{subdomain} -domain #{domain} -ssi true -php true  -www_root #{path}`
+  FileUtils.mkpath path_subdomain(subdomain)
+  puts "sudo /usr/local/psa/bin/subdomain --create #{subdomain} -domain #{domain} -ssi true -php true  -www_root #{plesk_path_subdomain(subdomain)}"
+  `sudo /usr/local/psa/bin/subdomain --create #{subdomain} -domain #{domain} -ssi true -php true  -www_root #{plesk_path_subdomain(subdomain)}`
 end
 
 def remove_subdomain_plesk(subdomain)

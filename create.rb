@@ -8,8 +8,8 @@ def create_site(name)
   if(not subdomain_exists? name)
     create_subdomain_plesk(name)
   end
-  deploy_port = $config_local.fetch('deploy_port', '8701')
-  web_port = $config_local.fetch('web_port', '10000')
+  deploy_port = $config_local.fetch('deploy_port', 8701)
+  web_port = $config_local.fetch('web_port', 10000)
   
   # start docker with loopback
   create_server_docker("server_"+name, deploy_port, web_port)
