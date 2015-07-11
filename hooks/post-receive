@@ -2,6 +2,6 @@ echo "********************"
 echo "Post receive hook: Updating hives"
 echo "********************"
 cd ~/data/code
-UNSET GIT_DIR
+unset GIT_DIR
 git pull origin master
 cd ~ && ruby ~/update.rb
