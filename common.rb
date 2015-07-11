@@ -14,12 +14,15 @@ def path_dist()
 end
 
 def create_subdomain_plesk(subdomain)
+  puts "create subdomain #{subdomain}"
   domain = "memberhive.com"
   path = path_subdomain(subdomain)
+  FileUtils.mkpath path
   `sudo /usr/local/psa/bin/subdomain --create #{subdomain} -domain #{domain} -ssi true -php true  -www_root #{path}`
 end
 
 def remove_subdomain_plesk(subdomain)
+  puts "remove subdomain #{subdomain}"
   domain = "memberhive.com"
   `sudo /usr/local/psa/bin/subdomain --remove #{subdomain} -domain #{domain}`
 end
