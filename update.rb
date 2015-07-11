@@ -19,7 +19,7 @@ def update_sites_index(name, site)
 end
 def main()
   $config["sites"].each do |name, config|
-    update_sites_index(name, site)
+    update_sites_index(name, config)
   end
 end
 main()
