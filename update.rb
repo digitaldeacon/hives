@@ -18,7 +18,7 @@ def update_sites_index(name, site)
   FileUtils.ln_s("#{$path}/data/dist/styles", path_subdomain(name) +"/styles")                                                                                  
 end
 def main()
-  $config["sites"].each do |name, config|
+  $config_local["sites"].each do |name, config|
     update_sites_index(name, config)
   end
 end
