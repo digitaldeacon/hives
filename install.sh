@@ -1,5 +1,6 @@
 echo "Configuring git repository"
 base=`pwd`
+rm ${base}/data -rf
 mkdir ${base}/data
 mkdir ${base}/data/git
 mkdir ${base}/data/subdomains
