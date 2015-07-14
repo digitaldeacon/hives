@@ -1,8 +1,11 @@
 echo "********************"
 echo "Post receive hook: Updating hives"
 echo "********************"
+cd =/var/www/vhosts/memberhive.com/hives/data/code
 unset GIT_INDEX_FILE
-git --work-tree=/var/www/vhosts/memberhive.com/hives/data/code --git-dir=/var/www/vhosts/memberhive.com/hives/data/git checkout -f
+unset GIT_DIR
+git fetch --all
+git reset --hard origin/master
 cd /var/www/vhosts/memberhive.com/hives
 ruby create.rb
 ruby update.rb
