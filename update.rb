@@ -17,6 +17,10 @@ def update_sites_index(name, site)
   FileUtils.ln_s("#{$path}/data/dist/fonts", path_subdomain(name) +"/fonts")                                                                                  
   FileUtils.ln_s("#{$path}/data/dist/scripts", path_subdomain(name) +"/scripts")                                                                                  
   FileUtils.ln_s("#{$path}/data/dist/styles", path_subdomain(name) +"/styles")                                                                                  
+  FileUtils.ln_s("#{$path}/data/dist/app/images", path_subdomain(name) +"/app/images")                                                                                  
+  FileUtils.ln_s("#{$path}/data/dist/favicon.ico", path_subdomain(name) +"/favicon.ico")                                                                                  
+  FileUtils.ln_s("#{$path}/data/dist/robots.txt", path_subdomain(name) +"/robots.txt")                                                                                  
+  FileUtils.ln_s("#{$path}/data/dist/favicon.png", path_subdomain(name) +"/favicon.png")                                                                                  
 end
 def main()
   $config_local["sites"].each do |name, config|
