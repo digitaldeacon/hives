@@ -12,6 +12,6 @@ ENV HOME=/home/strong-pm PORT=3000
 USER strong-pm
 
 # Expose strong-pm port
-EXPOSE 8701 3000
+EXPOSE 8701 3001
 
 ENTRYPOINT ["/usr/local/bin/sl-pm", "--base", ".", "--listen", "8701"]
