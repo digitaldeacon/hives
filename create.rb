@@ -12,7 +12,7 @@ def create_site(name)
   web_port = $config_local.fetch('web_port', 10000)
   
   # start docker with loopback
-  create_server_docker("server_"+name, deploy_port, web_port)
+  create_server_docker("mh_server_"+name, deploy_port, web_port)
   
   $config_local['deploy_port'] = deploy_port+1;
   $config_local['web_port'] = web_port+1;
@@ -28,8 +28,6 @@ def create_site(name)
         "docker_name" => "server_"+name
       }
   write_local_config()
-  # create database
-  
 end
 
 def create_server_docker(name, deploy_port, web_port)
@@ -49,11 +47,13 @@ def main()
   if(not subdomain_exists? "static")
     create_subdomain_plesk "static"
   end
+  
   $config["sites"].each do |name, config|
     if not $config_local.has_key? "sites" or not $config_local["sites"].has_key? name
       create_site(name)
     end
   end
+  
   write_local_config()
 end
 
