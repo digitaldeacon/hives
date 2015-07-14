@@ -10,9 +10,9 @@ def create_site(name)
   end
   deploy_port = $config_local.fetch('deploy_port', 8701)
   web_port = $config_local.fetch('web_port', 10000)
-  
+  server_name = "mh_server_"+name
   # start docker with loopback
-  create_server_docker("mh_server_"+name, deploy_port, web_port)
+  create_server_docker(server_name, deploy_port, web_port)
   
   $config_local['deploy_port'] = deploy_port+1;
   $config_local['web_port'] = web_port+1;
@@ -25,7 +25,7 @@ def create_site(name)
       {
         "deploy_port" =>  deploy_port,
         "web_port" => web_port,
-        "docker_name" => "server_"+name
+        "docker_server_name" => server_name
       }
   write_local_config()
 end
