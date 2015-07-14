@@ -1,7 +1,7 @@
 echo "********************"
 echo "Post receive hook: Updating hives"
 echo "********************"
-cd =/var/www/vhosts/memberhive.com/hives/data/code
+cd /var/www/vhosts/memberhive.com/hives/data/code
 unset GIT_INDEX_FILE
 unset GIT_DIR
 git fetch --all
