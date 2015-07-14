@@ -4,4 +4,6 @@ echo "********************"
 cd ~/data/code
 unset GIT_DIR
 git pull origin master
-cd ~ && ruby ~/update.rb
+cd ~ 
+ruby create.rb
+ruby update.rb

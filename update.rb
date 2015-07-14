@@ -1,13 +1,14 @@
 require_relative 'common'
 #
 puts "Update Scripts"
-#exea("cd #{$path}/data/code && git pull origin master")
 
 #def update_static()
   #FileUtils.cp_r("#{$path}/data/dist/", path_subdomain("static"))
 #end
 
 def update_sites_index(name, site)
+  FileUtils.rm_rf(path_subdomain(name))
+  FileUtils.mkpath(path_subdomain(name))
   index = path_subdomain(name)+"/index.html"
   FileUtils.cp("#{$path}/data/dist/index.html", index)
   index_content = File.read(index)
