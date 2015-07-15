@@ -23,8 +23,14 @@ def update_sites_index(name, site)
   FileUtils.ln_s("#{$path}/data/dist/robots.txt", path_subdomain(name) +"/robots.txt")                                                                                  
   FileUtils.ln_s("#{$path}/data/dist/favicon.png", path_subdomain(name) +"/favicon.png")                                                                                  
 end
+
+def update_server(name, config)
+  exe("cd #{$path}/data/code && slc deploy http://localhost:#{config['deploy_port']} master")
+end
+
 def main()
   $config_local["sites"].each do |name, config|
+    update_server(name, config)
     update_sites_index(name, config)
   end
 end
