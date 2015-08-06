@@ -13,7 +13,7 @@ def create_site(name)
   server_name = "mh-server-"+name
   db_name = "mh-db-"+name
   # start docker with loopback
-  create_db_server(db_name)
+  create_db_docker(db_name)
   create_server_docker(server_name, deploy_port, web_port)
   
   $config_local['deploy_port'] = deploy_port+1;
