@@ -52,7 +52,7 @@ def create_db_docker(name, docker_db_name)
   exe("sleep 10")
   if(not db_exists)
     puts "create db".blue
-    exe("docker exec #{docker_db_name} -it 'mongo memberhive --eval \"db.addUser(\\\"memberhive\\\", \\\"memberhive\\\");\"'")
+    exe("docker exec -it #{docker_db_name} -'mongo memberhive --eval \"db.addUser(\\\"memberhive\\\", \\\"memberhive\\\");\"'")
   end
 end
 
@@ -65,7 +65,7 @@ end
 def build_docker()
   puts "Building docker files".colorize(:blue)
   exe("cd docker/server && docker build -t mh-strong-pm .")
-  exe("docker pull mongo")
+  #exe("docker pull mongo")
 
 end
 
