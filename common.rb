@@ -36,6 +36,7 @@ def exe(cmd)
   puts "#{cmd}".green.bold
   ret = `#{cmd}`
   puts "return = #{ret}".green
+  return ret
 end
 
 def db_path(name)

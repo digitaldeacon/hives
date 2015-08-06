@@ -30,7 +30,10 @@ def create_site(name)
   if not create_db_docker(name, docker_db_name) #frist time
     puts "create db and user".blue
     exe("sleep 30")
-    exe("docker exec -it #{docker_db_name} mongo memberhive --eval 'db.addUser(\"memberhive\", \"#{db_password}\");'")
+    ret = "Error: "
+    while(ret.contains? "Error: ")
+      ret = exe("docker exec -it #{docker_db_name} mongo memberhive --eval 'db.addUser(\"memberhive\", \"#{db_password}\");'")
+    end
   end
   create_server_docker(docker_server_name, deploy_port, web_port, docker_db_name)
   
