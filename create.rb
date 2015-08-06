@@ -37,7 +37,7 @@ def create_site(name)
 end
 def create_slc_service(name)
   exe("slc ctl create #{name}")
-  exe("slc ctl env-set #{name} NODE_ENV=production")
+  #exe("slc ctl env-set #{name} NODE_ENV=production")
 end
 
 def create_db_docker(name, docker_db_name)
@@ -51,7 +51,7 @@ def create_db_docker(name, docker_db_name)
   exe("docker run -d -v #{db}:/data/db --name #{docker_db_name} -d mongo:2.4")
   if(not db_exists)
     puts "create db and user".blue
-    exe("sleep 10")
+    exe("sleep 30")
     exe("docker exec -it #{docker_db_name} mongo memberhive --eval 'db.addUser(\"memberhive\", \"memberhive\");'")
   end
 end
