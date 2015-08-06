@@ -24,7 +24,9 @@ def create_site(name)
         "docker_db_name" => docker_db_name,
         "db_password" => db_password
       }
-  
+  $config_local['deploy_port'] = deploy_port+1;
+  $config_local['web_port'] = web_port+1;
+  write_local_config()
   
   # start docker with loopback
   if not create_db_docker(name, docker_db_name) #frist time
@@ -32,19 +34,17 @@ def create_site(name)
     exe("sleep 30")
     ret = "Error: "
     while(ret.include? "Error: ")
-      ret = exe("docker exec -it #{docker_db_name} mongo memberhive --eval 'db.addUser(\"memberhive\", \"#{db_password}\");'")
+      ret = exe("docker exec -it #{docker_db_name} mongo memberhive --eval 'db.addUser(\"#{name}\", \"#{db_password}\");'")
     end
   end
   create_server_docker(docker_server_name, deploy_port, web_port, docker_db_name)
   
-  $config_local['deploy_port'] = deploy_port+1;
-  $config_local['web_port'] = web_port+1;
+  
   exe("sleep 2")
   
  
   update_server(name)
   
-  write_local_config()
 end
 
 def main()
