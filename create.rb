@@ -57,10 +57,7 @@ def subdomain_exists?(name)
 end
 
 def main()
-  puts 
-  /*if(not subdomain_exists? "static")
-    create_subdomain_plesk "static"
-  end*/
+  puts "Begiining to boostrap environment".blue
   build_docker();
   $config["sites"].each do |name, config|
     if not $config_local.has_key? "sites" or not $config_local["sites"].has_key? name
