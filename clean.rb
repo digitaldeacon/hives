@@ -11,5 +11,5 @@ if $config_local.has_key? "sites"
 end
 File.open("config_local.json", "w") do |file|
   pwd = `pwd`
-  file.write('{"path":"'+pwd+'"}') 
+  file.write('{"path":"'+pwd.strip+'"}') 
 end
