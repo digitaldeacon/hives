@@ -48,11 +48,11 @@ def create_db_docker(name, docker_db_name)
     db_exists = false
     FileUtils.mkpath db
   end
-  exe("docker run -d -v #{db}:/data/db --name #{docker_db_name} -d mongo")
-  exe("sleep 10")
+  exe("docker run -d -v #{db}:/data/db --name #{docker_db_name} -d mongo:2.4")
   if(not db_exists)
-    puts "create db".blue
-    exe("docker exec -it #{docker_db_name} 'mongo memberhive --eval \"db.addUser(\\\"memberhive\\\", \\\"memberhive\\\");\"'")
+    puts "create db and user".blue
+    exe("sleep 10")
+    exe("docker exec -it #{docker_db_name} mongo memberhive --eval 'db.addUser(\"memberhive\", \"memberhive\");'")
   end
 end
 
@@ -65,8 +65,7 @@ end
 def build_docker()
   puts "Building docker files".colorize(:blue)
   exe("cd docker/server && docker build -t mh-strong-pm .")
-  #exe("docker pull mongo")
-
+  exe("docker pull mongo:2.4")
 end
 
 
