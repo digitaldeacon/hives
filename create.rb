@@ -34,7 +34,7 @@ def create_site(name)
     exe("sleep 30")
     ret = "Error: "
     while(ret.include? "Error: ")
-      ret = exe("docker exec -it #{docker_db_name} mongo memberhive --eval 'db.addUser(\"#{name}\", \"#{db_password}\");'")
+      ret = exe("docker exec -it #{docker_db_name} mongo #{name} --eval 'db.addUser(\"#{name}\", \"#{db_password}\");'")
     end
   end
   create_server_docker(docker_server_name, deploy_port, web_port, docker_db_name)
