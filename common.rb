@@ -58,7 +58,11 @@ def create_db_docker(name, docker_db_name)
     db_exists = false
     FileUtils.mkpath db
   end
-  exe("docker run -d -v #{db}:/data/db --name #{docker_db_name} -d mongo:2.4")
+  ext = ""
+  if($config["sites"][name].has_key? "exposeDB") 
+    ext = "-p 0.0.0.0:#{$config["sites"][name]["exposeDB"}:27017"
+  end
+  exe("docker run -d -v #{db}:/data/db --name #{docker_db_name} #{ext} -d mongo:2.4")
   return db_exists
 end
 

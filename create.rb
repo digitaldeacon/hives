@@ -11,7 +11,7 @@ def create_site(name)
   web_port = $config_local.fetch('web_port', 10000)
   docker_server_name = "mh-server-"+name
   docker_db_name = "mh-db-"+name
-  db_password = rand(36**length).to_s(36)
+  db_password = rand(36**12).to_s(36)
   if(not $config_local.has_key? 'sites')
     $config_local['sites'] = {}
   end
