@@ -1,6 +1,6 @@
 require 'json'
 require 'fileutils'
-require 'colorize'
+require_relative 'ext/colorize'
 
 $config = JSON.parse(File.read('config.json'))
 $config_local = JSON.parse(File.read('config_local.json'))

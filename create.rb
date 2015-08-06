@@ -1,7 +1,6 @@
 require 'json'
 require 'fileutils'
 require_relative 'common'
-require 'colorize'
 
 def create_site(name)
   puts "creating site #{name}".blue
