@@ -52,7 +52,7 @@ def create_db_docker(name, docker_db_name)
   exe("sleep 10")
   if(not db_exists)
     puts "create db".blue
-    exe("docker exec -it #{docker_db_name} -'mongo memberhive --eval \"db.addUser(\\\"memberhive\\\", \\\"memberhive\\\");\"'")
+    exe("docker exec -it #{docker_db_name} 'mongo memberhive --eval \"db.addUser(\\\"memberhive\\\", \\\"memberhive\\\");\"'")
   end
 end
 
