@@ -1,5 +1,6 @@
 require 'json'
 require 'fileutils'
+require 'colorize'
 
 $config = JSON.parse(File.read('config.json'))
 $config_local = JSON.parse(File.read('config_local.json'))
@@ -32,7 +33,7 @@ def write_local_config()
   end
 end
 def exe(cmd)
-  puts "running cmd #{cmd}"
+  puts "running cmd \n#{cmd}".green
   ret = `#{cmd}`
-  puts "return = #{ret}"
+  puts "return = #{ret}".green
 end

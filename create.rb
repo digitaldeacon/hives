@@ -1,10 +1,10 @@
 require 'json'
 require 'fileutils'
 require_relative 'common'
-
+require 'colorize'
 
 def create_site(name)
-  puts "creating site #{name}"
+  puts "creating site #{name}".blue
   if(not subdomain_exists? name)
     create_subdomain_plesk(name)
   end
@@ -31,6 +31,7 @@ def create_site(name)
 end
 
 def create_server_docker(name, deploy_port, web_port)
+  puts "Create docker server for #{name}".colorize(:blue)
   exe("docker run -d -p #{deploy_port}:8701 -p #{web_port}:3001 --name #{name} mh-strong-pm")
 end
 
@@ -40,6 +41,7 @@ end
 
 
 def build_docker()
+  puts "Building docker files".colorize(:blue)
   exe("cd docker/server && docker build -t mh-strong-pm .")
   exe("docker pull dockerfile/mongodb")
 
@@ -51,6 +53,7 @@ def subdomain_exists?(name)
 end
 
 def main()
+  puts 
   if(not subdomain_exists? "static")
     create_subdomain_plesk "static"
   end
