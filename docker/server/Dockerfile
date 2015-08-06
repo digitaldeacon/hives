@@ -7,6 +7,7 @@ RUN useradd -ms /bin/bash strong-pm \
 # Set up some semblance of an environment
 WORKDIR /home/strong-pm
 ENV HOME=/home/strong-pm PORT=3000
+ENV NODE_ENV=production
 
 # Run as non-privileged user inside container
 USER strong-pm

@@ -14,15 +14,17 @@ def create_site(name)
   db_name = "mh-db-"+name
   # start docker with loopback
   create_db_docker(db_name)
-  create_server_docker(server_name, deploy_port, web_port)
+  create_server_docker(server_name, deploy_port, web_port, db_name)
   
   $config_local['deploy_port'] = deploy_port+1;
   $config_local['web_port'] = web_port+1;
   exe("sleep 2")
   exe("cd #{$path}/data/code && slc deploy http://localhost:#{deploy_port} master")
+  
   if(not $config_local.has_key? 'sites')
     $config_local['sites'] = {}
   end
+  
   $config_local['sites'][name] = 
       {
         "deploy_port" =>  deploy_port,
@@ -38,9 +40,9 @@ def create_db_docker(name)
   exe("docker run -d --name #{name} -d mongo")
 end
 
-def create_server_docker(name, deploy_port, web_port)
+def create_server_docker(name, deploy_port, web_port, db_name)
   puts "Create docker server for #{name}".colorize(:blue)
-  exe("docker run -d -p #{deploy_port}:8701 -p #{web_port}:3001 --name #{name} mh-strong-pm")
+  exe("docker run -d -p #{deploy_port}:8701 -p #{web_port}:3001 --name #{name} --link #{db_name}:db mh-strong-pm")
 end
 
 
