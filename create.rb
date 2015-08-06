@@ -31,7 +31,7 @@ def create_site(name)
     puts "create db and user".blue
     exe("sleep 30")
     ret = "Error: "
-    while(ret.contains? "Error: ")
+    while(ret.include? "Error: ")
       ret = exe("docker exec -it #{docker_db_name} mongo memberhive --eval 'db.addUser(\"memberhive\", \"#{db_password}\");'")
     end
   end
