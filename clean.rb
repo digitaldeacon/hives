@@ -9,4 +9,9 @@ if $config_local.has_key? "sites"
     exe("docker stop #{config['docker_server_name']} && docker rm #{config['docker_server_name']}")
     exe("docker stop #{config['docker_db_name']} && docker rm #{config['docker_db_name']}")
   end
+  FileUtils.rm()
+  File.open("config_local.json", "w") do |file|
+    pwd = `pwd`
+    file.write('{"path":"'+pwd+'"}') 
+  end
 end
