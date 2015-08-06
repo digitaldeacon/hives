@@ -46,7 +46,7 @@ def create_db_docker(name, docker_db_name)
   db_exists = true
   if not File.exists? db
     db_exists = false
-    FileUtils.mk_path db
+    FileUtils.mkpath db
   end
   exe("docker run -d -v #{db}:/data/db --name #{docker_db_name} -d mongo")
   exe("sleep 10")
