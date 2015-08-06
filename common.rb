@@ -33,7 +33,7 @@ def write_local_config()
   end
 end
 def exe(cmd)
-  puts "#{cmd}".colorize(:color => :green, :background => :white)
+  puts "#{cmd}".green.bold
   ret = `#{cmd}`
   puts "return = #{ret}".green
 end
