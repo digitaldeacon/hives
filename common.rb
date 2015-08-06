@@ -37,3 +37,10 @@ def exe(cmd)
   ret = `#{cmd}`
   puts "return = #{ret}".green
 end
+
+
+def update_server(name)
+  puts "Deploy to server #{name}".blue
+  config = $config_local['sites'][name]
+  exe("cd #{$path}/data/code && slc deploy --service=#{name} http://localhost:#{config['deploy_port']} master")
+end

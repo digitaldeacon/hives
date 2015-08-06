@@ -18,7 +18,6 @@ def create_site(name)
   $config_local['deploy_port'] = deploy_port+1;
   $config_local['web_port'] = web_port+1;
   exe("sleep 2")
-  exe("cd #{$path}/data/code && slc deploy http://localhost:#{deploy_port} master")
   
   if(not $config_local.has_key? 'sites')
     $config_local['sites'] = {}
@@ -31,7 +30,14 @@ def create_site(name)
         "docker_server_name" => server_name,
         "docker_db_name" => db_name
       }
+  
+  update_server(name)
+  
   write_local_config()
+end
+def create_slc_service(name)
+  exe("slc ctl create #{name}")
+  exe("slc ctl env-set #{name} NODE_ENV=production")
 end
 
 def create_db_docker(name)
