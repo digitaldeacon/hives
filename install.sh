@@ -6,6 +6,7 @@ mkdir ${base}/data/git
 mkdir ${base}/data/subdomains
 mkdir ${base}/data/dist
 mkdir ${base}/data/code
+mkdir ${base}/data/db
 
 cd ${base}/data/git
 git init --bare

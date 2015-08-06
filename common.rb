@@ -38,6 +38,10 @@ def exe(cmd)
   puts "return = #{ret}".green
 end
 
+def db_path(name)
+  "#{$path}/data/db/#{name}"
+end
+
 
 def update_server(name)
   puts "Deploy to server #{name}".blue
