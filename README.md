@@ -1,4 +1,4 @@
-# hives
+# Hives
 Manage serveral memberhive instances
 
 

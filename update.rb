@@ -1,10 +1,7 @@
 require_relative 'common'
 #
-puts "Update Scripts"
+puts "------ Update Scripts ---------"
 
-#def update_static()
-  #FileUtils.cp_r("#{$path}/data/dist/", path_subdomain("static"))
-#end
 
 def update_sites_index(name, site)
   FileUtils.rm_rf(path_subdomain(name))

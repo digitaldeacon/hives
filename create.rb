@@ -31,11 +31,18 @@ def create_site(name)
 end
 
 def create_server_docker(name, deploy_port, web_port)
-  exe("docker run -d -p #{deploy_port}:8701 -p #{web_port}:3001 --name #{name} metaxy/strong-pm")
+  exe("docker run -d -p #{deploy_port}:8701 -p #{web_port}:3001 --name #{name} mh-strong-pm")
 end
 
 def create_mongodb()
   # create mongodb
+end
+
+
+def build_docker()
+  exe("cd docker/server && docker build -t mh-strong-pm .")
+  exe("docker pull dockerfile/mongodb")
+
 end
 
 
@@ -47,7 +54,7 @@ def main()
   if(not subdomain_exists? "static")
     create_subdomain_plesk "static"
   end
-  
+  build_docker();
   $config["sites"].each do |name, config|
     if not $config_local.has_key? "sites" or not $config_local["sites"].has_key? name
       create_site(name)
