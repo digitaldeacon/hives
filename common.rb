@@ -33,7 +33,7 @@ def write_local_config()
   end
 end
 def exe(cmd)
-  puts "running cmd \n#{cmd}".green
+  puts "#{cmd}".green
   ret = `#{cmd}`
-  puts "return = #{ret}".green
+  puts "return = #{ret}".red
 end

@@ -10,8 +10,10 @@ def create_site(name)
   end
   deploy_port = $config_local.fetch('deploy_port', 8701)
   web_port = $config_local.fetch('web_port', 10000)
-  server_name = "mh_server_"+name
+  server_name = "mh-server-"+name
+  db_name = "mh-db-"+name
   # start docker with loopback
+  create_db_server(db_name)
   create_server_docker(server_name, deploy_port, web_port)
   
   $config_local['deploy_port'] = deploy_port+1;
@@ -25,9 +27,15 @@ def create_site(name)
       {
         "deploy_port" =>  deploy_port,
         "web_port" => web_port,
-        "docker_server_name" => server_name
+        "docker_server_name" => server_name,
+        "docker_db_name" => db_name
       }
   write_local_config()
+end
+
+def create_db_docker(name)
+  puts "Create db server for #{name}".colorize(:blue)
+  exe("docker run -d --name #{name} -d mongo")
 end
 
 def create_server_docker(name, deploy_port, web_port)
@@ -35,15 +43,11 @@ def create_server_docker(name, deploy_port, web_port)
   exe("docker run -d -p #{deploy_port}:8701 -p #{web_port}:3001 --name #{name} mh-strong-pm")
 end
 
-def create_mongodb()
-  # create mongodb
-end
-
 
 def build_docker()
   puts "Building docker files".colorize(:blue)
   exe("cd docker/server && docker build -t mh-strong-pm .")
-  exe("docker pull dockerfile/mongodb")
+  exe("docker pull mongo")
 
 end
 
