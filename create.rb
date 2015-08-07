@@ -38,13 +38,8 @@ def create_site(name)
     end
   end
   create_server_docker(docker_server_name, deploy_port, web_port, docker_db_name)
-  
-  
   exe("sleep 2")
-  
- 
   update_server(name)
-  
 end
 
 def main()
@@ -55,7 +50,6 @@ def main()
       create_site(name)
     end
   end
-  
   write_local_config()
 end
 

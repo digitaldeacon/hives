@@ -90,6 +90,7 @@ def create_slc_service(name, db_password)
   exe("slc ctl env-set #{name} MH_DB_PASSWORD=#{db_password}")
   exe("slc ctl env-set #{name} MH_DB_NAME=#{name}")
   exe("slc ctl env-set #{name} MH_DB_USER=#{name}")
+  exe("slc ctl env-set #{name} STRONGLOOP_CLUSTER=1")
 end
 
 def build_docker()
