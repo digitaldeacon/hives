@@ -46,8 +46,11 @@ def create_site(name)
 end
 
 def main()
-  puts "Begiining to boostrap environment".blue
-  build_docker();
+  puts "Boostraping environment".blue
+  if not $config_local.has_key? 'docker_build'
+    build_docker();
+  end
+  $config_local['docker_build'] = true
   $config["sites"].each do |name, config|
     if not $config_local.has_key? "sites" or not $config_local["sites"].has_key? name
       create_site(name)
