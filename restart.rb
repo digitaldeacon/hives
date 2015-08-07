@@ -6,8 +6,8 @@ puts "------ Restart all stuff ---------"
 def main()
   build_docker()
   $config_local["sites"].each do |name, config|
-    remove_docker(name)
     exe("slc ctl remove #{name}")
+    remove_docker(name)
     create_db_docker(name, config['docker_db_name'])
     create_server_docker(
       config['docker_server_name'], 
