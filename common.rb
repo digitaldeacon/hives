@@ -84,15 +84,14 @@ def stop_docker(name)
   exe("docker stop -t 1 #{config['docker_db_name']}")
 end
 
-def create_slc_service(name, db_password)
-  exe("slc ctl create #{name}")
-  exe("slc ctl env-set #{name} NODE_ENV=production")
-  exe("slc ctl env-set #{name} MH_DB_PASSWORD=#{db_password}")
-  exe("slc ctl env-set #{name} MH_DB_NAME=#{name}")
-  exe("slc ctl env-set #{name} MH_DB_USER=#{name}")
-  exe("slc ctl env-set #{name} STRONGLOOP_CLUSTER=1")
+def create_slc_service(name)
+  config = $config_local['sites'][name]
+  exe("slc ctl -C http://127.0.0.1:#{config['deploy_port']} create #{name}")
 end
-
+def set_slc_service(name)
+  config = $config_local['sites'][name]
+  exe("slc ctl -C http://127.0.0.1:#{config['deploy_port']} env-set #{name} NODE_ENV=production MH_DB_PASSWORD=#{config['db_password']} MH_DB_NAME=#{name} MH_DB_USER=#{name} STRONGLOOP_CLUSTER=1")
+end
 def build_docker()
   puts "Building docker files".colorize(:blue)
   exe("cd docker/server && docker build -t mh-strong-pm .")

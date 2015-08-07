@@ -39,6 +39,9 @@ def create_site(name)
   end
   create_server_docker(docker_server_name, deploy_port, web_port, docker_db_name)
   exe("sleep 2")
+  create_slc_service(name)
+  set_slc_service(name)
+  exe("sleep 2")
   update_server(name)
 end
 
