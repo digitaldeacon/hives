@@ -90,7 +90,7 @@ def create_slc_service(name)
 end
 def set_slc_service(name)
   config = $config_local['sites'][name]
-  exe("slc ctl -C http://127.0.0.1:#{config['deploy_port']} env-set #{name} NODE_ENV=production MH_DB_PASSWORD=#{config['db_password']} MH_DB_NAME=#{name} MH_DB_USER=#{name} STRONGLOOP_CLUSTER=1")
+  exe("slc ctl -C http://127.0.0.1:#{config['deploy_port']} env-set #{name} NODE_ENV=production MH_DB_PASSWORD=#{config['db_password']} MH_DB_NAME=#{name} MH_DB_USER=#{name} MH_ROOT_EMAIL='#{config['root_email']}' MH_ROOT_PASSWORD=#{config['root_password']} STRONGLOOP_CLUSTER=1")
   exe("slc ctl -C http://127.0.0.1:#{config['deploy_port']} set-size #{name} 1")
 end
 def build_docker()
