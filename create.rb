@@ -27,8 +27,9 @@ def create_site(name, config)
         "web_port" => web_port,
         "docker_server_name" => docker_server_name,
         "docker_db_name" => docker_db_name,
-        "db_password" => db_password
-        "root_password" => root_password
+        "db_password" => db_password,
+        "root_password" => root_password,
+        "root_email" => root_email
       }
   $config_local['deploy_port'] = deploy_port+1;
   $config_local['web_port'] = web_port+1;
