@@ -16,7 +16,7 @@ def create_site(name, config)
   db_password = rand(36**12).to_s(36)
   root_password = rand(36**12).to_s(36)
   root_email = config['root_email'] || name + "@memberhive.com"
-  root_email = config['root_username'] || name
+  root_username = config['root_username'] || name
       
   if(not $config_local.has_key? 'sites')
     $config_local['sites'] = {}
