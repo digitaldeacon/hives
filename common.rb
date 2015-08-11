@@ -40,10 +40,10 @@ def exe(cmd)
 end
 
 def db_path(name)
-  "#{$path}/data/#{name}/db"
+  "#{$path}/data/clients/#{name}/db"
 end
 def files_path(name)
-  "#{$path}/data/#{name}/files"
+  "#{$path}/data/clients/#{name}/files"
 end
 
 def update_server(name)
