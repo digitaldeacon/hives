@@ -40,9 +40,11 @@ def exe(cmd)
 end
 
 def db_path(name)
-  "#{$path}/data/db/#{name}"
+  "#{$path}/data/#{name}/db"
 end
-
+def files_path(name)
+  "#{$path}/data/#{name}/files"
+end
 
 def update_server(name)
   puts "Deploy to server #{name}".blue
@@ -69,7 +71,9 @@ end
 
 def create_server_docker(name, deploy_port, web_port, db_name)
   puts "Create docker server for #{name}".blue
-  exe("docker run -d -p #{deploy_port}:8701 -p #{web_port}:3001 --name #{name} --link #{db_name}:db mh-strong-pm")
+  files_path = files_path(name)
+  FileUtils.mkpath files_path 
+  exe("docker run -d -p #{deploy_port}:8701 -p #{web_port}:3001 -v #{files_path}:/var/data/files --name #{name} --link #{db_name}:db mh-strong-pm")
 end
 
 def remove_docker(name)
