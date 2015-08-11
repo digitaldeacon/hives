@@ -15,7 +15,8 @@ def create_site(name, config)
   docker_db_name = "mh-db-"+name
   db_password = rand(36**12).to_s(36)
   root_password = rand(36**12).to_s(36)
-  root_email = config['root-email'] || name + "@memberhive.com"
+  root_email = config['root_email'] || name + "@memberhive.com"
+  root_email = config['root_username'] || name
       
   if(not $config_local.has_key? 'sites')
     $config_local['sites'] = {}
@@ -29,7 +30,8 @@ def create_site(name, config)
         "docker_db_name" => docker_db_name,
         "db_password" => db_password,
         "root_password" => root_password,
-        "root_email" => root_email
+        "root_email" => root_email,
+        "root_username" => root_username
       }
   $config_local['deploy_port'] = deploy_port+1;
   $config_local['web_port'] = web_port+1;
