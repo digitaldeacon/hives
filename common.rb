@@ -69,11 +69,11 @@ def create_db_docker(name, docker_db_name)
   return db_exists
 end
 
-def create_server_docker(name, deploy_port, web_port, db_name)
+def create_server_docker(name, docker_server_name, deploy_port, web_port, db_name)
   puts "Create docker server for #{name}".blue
   files_path = files_path(name)
   FileUtils.mkpath files_path 
-  exe("docker run -d -p #{deploy_port}:8701 -p #{web_port}:3001 -v #{files_path}:/var/data/files --name #{name} --link #{db_name}:db mh-strong-pm")
+  exe("docker run -d -p #{deploy_port}:8701 -p #{web_port}:3001 -v #{files_path}:/var/data/files --name #{docker_server_name} --link #{db_name}:db mh-strong-pm")
 end
 
 def remove_docker(name)

@@ -10,6 +10,7 @@ def main()
     remove_docker(name)
     create_db_docker(name, config['docker_db_name'])
     create_server_docker(
+      name,
       config['docker_server_name'], 
       config['deploy_port'], 
       config['web_port'], 
