@@ -74,7 +74,8 @@ def create_server_docker(name, docker_server_name, deploy_port, web_port, db_nam
   files_path = files_path(name)
   FileUtils.mkpath files_path 
   FileUtils.mkpath(files_path+'/avatar')
-  exe("docker run --privileged=true -d -p #{deploy_port}:8701 -p #{web_port}:3001 -v #{files_path}:/var/data/files --name #{docker_server_name} --link #{db_name}:db mh-strong-pm")
+  exe("docker run -d -p #{deploy_port}:8701 -p #{web_port}:3001 -v #{files_path}:/usr/local/files --name #{docker_server_name} --link #{db_name}:db mh-strong-pm")
+  exe("docker exec #{docker_server_name} chown -R strong-pm:strong-pm /usr/local/files")
 end
 
 def remove_docker(name)

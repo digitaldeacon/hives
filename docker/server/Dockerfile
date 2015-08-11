@@ -2,7 +2,6 @@ FROM iojs:2.5
 
 RUN useradd -ms /bin/bash strong-pm \
     && chown -R strong-pm:strong-pm /usr/local \
-    && chown -R strong-pm:strong-pm /var/data/files \
     && su strong-pm -c "npm install -g strong-pm && npm cache clear"
 
 # Set up some semblance of an environment
