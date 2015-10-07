@@ -54,6 +54,12 @@ def create_site(name, config)
   update_server(name)
 end
 
+def create_docs()
+  if(not subdomain_exists? "client-docs")
+    create_subdomain_plesk("client-docs")
+  end
+end
+
 def main()
   puts "Boostraping environment".blue
   if not $config_local.has_key? 'docker_build'
@@ -65,6 +71,11 @@ def main()
       create_site(name, config)
     end
   end
+  
+  # create doc site
+  create_docs()
+  
+  
   write_local_config()
 end
 

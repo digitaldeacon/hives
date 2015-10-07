@@ -27,6 +27,10 @@ def remove_subdomain_plesk(subdomain)
   exe("sudo /usr/local/psa/bin/subdomain --remove #{subdomain} -domain #{domain}")
 end
 
+def subdomain_exists?(name)
+  File.exists?(path_subdomain(name))
+end
+
 def write_local_config()
   File.open("config_local.json","w") do |f|
     f.write($config_local.to_json)
@@ -106,7 +110,4 @@ def build_docker()
 end
 
 
-def subdomain_exists?(name)
-  File.exists?(path_subdomain(name))
-end
 
