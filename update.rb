@@ -26,7 +26,7 @@ def update_doc()
     create_subdomain_plesk("client-docs")
   end
   FileUtils.rm_rf(path_subdomain("client-docs"))
-  FileUtils.ln_s("#{$path}/data/docs", path_subdomain("client-docs") +"/")  
+  FileUtils.ln_s("#{$path}/data/dist/docs", path_subdomain("client-docs") +"/")  
 end
 def main()
   update_doc()
