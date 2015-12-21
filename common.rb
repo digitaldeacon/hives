@@ -17,9 +17,10 @@ end
 def create_subdomain_plesk(subdomain)
   puts "create subdomain #{subdomain}"
   domain = "memberhive.com"
+  FileUtils.rm_rf path_subdomain(subdomain)
   FileUtils.mkpath path_subdomain(subdomain)
-  puts "sudo /usr/local/psa/bin/subdomain --create #{subdomain} -domain #{domain} -ssi true -php true  -www_root #{plesk_path_subdomain(subdomain)}"
-  exe("sudo /usr/local/psa/bin/subdomain --create #{subdomain} -domain #{domain} -ssi true -php true  -www_root #{plesk_path_subdomain(subdomain)}")
+  puts "sudo /usr/local/psa/bin/subdomain --create #{subdomain} -domain #{domain} -ssi false -php false  -www_root #{plesk_path_subdomain(subdomain)}"
+  exe("sudo /usr/local/psa/bin/subdomain --create #{subdomain} -domain #{domain} -ssi false -php false  -www_root #{plesk_path_subdomain(subdomain)}")
 end
 
 def remove_subdomain_plesk(subdomain)
