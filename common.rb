@@ -5,6 +5,7 @@ require_relative 'ext/colorize'
 $config = JSON.parse(File.read('config.json'))
 $config_local = JSON.parse(File.read('config_local.json'))
 $path = $config_local["path"]
+$domain = "memberhive.com"
 
 def plesk_path_subdomain(name)
   "/hives/data/subdomains/#{name}"
