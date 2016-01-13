@@ -1,6 +1,7 @@
 require 'json'
 require 'fileutils'
 require_relative 'common'
+require_relative 'root_common'
 
 def create_site(name, config)
   puts "creating site #{name}".blue
@@ -36,7 +37,6 @@ def create_site(name, config)
   $config_local['deploy_port'] = deploy_port+1;
   $config_local['web_port'] = web_port+1;
   write_local_config()
-  
   # start docker with loopback
   if not create_db_docker(name, docker_db_name) #frist time
     puts "create db and user".blue
@@ -52,6 +52,7 @@ def create_site(name, config)
   set_slc_service(name)
   exe("sleep 2")
   update_server(name)
+  forward_subdomain_plesk(name, web_port)
 end
 
 def create_docs()
