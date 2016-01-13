@@ -7,5 +7,4 @@ unset GIT_DIR
 git fetch --all
 git reset --hard origin/master
 cd /var/www/vhosts/memberhive.com/hives
-ruby create.rb
 ruby update.rb
