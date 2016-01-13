@@ -9,17 +9,19 @@ end
 def forward_subdomain_plesk(subdomain, port)
     puts "create config #{subdomain}"
 
-    http = "RewriteEngine On
-    ProxyPass /.well-known !
-    ProxyPassReverse /.well-known !
-    ProxyPass / http://localhost:#{port}/
-    ProxyPassReverse / http://localhost:#{port}/"
+    http = "
+RewriteEngine On
+ProxyPass /.well-known !
+ProxyPassReverse /.well-known !
+ProxyPass / http://localhost:#{port}/
+ProxyPassReverse / http://localhost:#{port}/"
 
-    https = "RewriteEngine On
-    ProxyPass /.well-known !
-    ProxyPassReverse /.well-known !
-    ProxyPass / http://localhost:#{port}/
-    ProxyPassReverse / http://localhost:#{port}/"
+    https = "
+RewriteEngine On
+ProxyPass /.well-known !
+ProxyPassReverse /.well-known !
+ProxyPass / http://localhost:#{port}/
+ProxyPassReverse / http://localhost:#{port}/"
     
     File.write("/var/www/vhosts/system/#{subdomain}.#{$domain}/conf/vhost.conf", http)
     File.write("/var/www/vhosts/system/#{subdomain}.#{$domain}/conf/vhost_ssl.conf", https)
