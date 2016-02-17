@@ -1,5 +1,6 @@
 require 'json'
-require 'fileutils'
+require 'fileutils'#
+require 'open3'
 require_relative 'ext/colorize'
 
 $config = JSON.parse(File.read('config.json'))
