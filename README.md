@@ -11,14 +11,14 @@ In the future we will support at least spinning up digitalocean instances and co
 
 # Tools
 show console output
-```docker attach mh-server-ecg```
+```docker attach mh-server-$NAME```
 
 get a shell on the instance
-```docker exec -it mh-server-test bash```
+```docker exec -it mh-server-$NAME bash```
 
 # Install
-`bash
+```bash
 git clone https://github.com/digitaldeacon/hives.git
 sh install.sh # creates folders and stuff
 sudo ruby root_create.rb
-`
+```
