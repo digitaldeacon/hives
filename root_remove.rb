@@ -1,5 +1,6 @@
 require 'json'
 require 'fileutils'
+require 'optparse'
 require_relative 'common'
 require_relative 'root_common'
 
