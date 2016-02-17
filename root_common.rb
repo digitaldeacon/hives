@@ -1,8 +1,13 @@
 $domain = "memberhive.com"
-def create_subdomain_plesk(subdomain)
+
+def plesk_path_subdomain(name)
+  "/hives/data/subdomains/#{name}"
+end
+
+def create_subdomain_plesk(name)
   puts "create subdomain #{subdomain}"
-  FileUtils.rm_rf path_subdomain(subdomain)
-  FileUtils.mkpath path_subdomain(subdomain)
+  FileUtils.rm_rf path_subdomain(name)
+  FileUtils.mkpath path_subdomain(name)
   exef("/usr/local/psa/bin/subdomain --create #{subdomain} -domain #{$domain} -www_root #{plesk_path_subdomain(subdomain)}")
 end
 

@@ -8,9 +8,7 @@ $config_local = JSON.parse(File.read('config_local.json'))
 $path = $config_local["path"]
 $domain = "memberhive.com"
 
-def plesk_path_subdomain(name)
-  "/hives/data/subdomains/#{name}"
-end
+
 def path_subdomain(name)
   "#{$path}/data/subdomains/#{name}"
 end

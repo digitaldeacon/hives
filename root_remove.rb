@@ -30,6 +30,7 @@ def main()
     
     if(subdomain_exists? name)
       remove_subdomain_plesk(name)
+      FileUtils.rm_rf path_subdomain(name)
     end
     
     
