@@ -24,7 +24,7 @@ def exef(cmd)
   out, err, st = Open3.capture3(cmd)
   puts "#{out}".green
   puts "#{err}".red
-  exit("command failed") if not status.success?
+  exit("command failed") if not st.success?
 end
 
 def exe(cmd)
@@ -32,7 +32,7 @@ def exe(cmd)
   out, err, st = Open3.capture3(cmd)
   puts "#{out}".green
   puts "#{err}".red
-  return status.success?
+  return st.success?
 end
 
 def db_path(name)
@@ -45,7 +45,7 @@ end
 def update_server(name)
   puts "Deploy to server #{name}".blue
   config = $config_local['sites'][name]
-  exe("cd #{$path}/data/code && slc deploy --service=#{name} http://localhost:#{config['deploy_port']} master")
+  exef("cd #{$path}/data/code && slc deploy --service=#{name} http://localhost:#{config['deploy_port']} master")
 end
 
 
@@ -61,7 +61,7 @@ def create_db_docker(name, docker_db_name)
   if($config["sites"][name].has_key? "exposeDB") 
     ext = "-p 0.0.0.0:#{$config["sites"][name]["exposeDB"]}:27017"
   end
-  exe("docker run -d -v #{db}:/data/db --name #{docker_db_name} #{ext} -d mongo:2.4")
+  exef("docker run -d -v #{db}:/data/db --name #{docker_db_name} #{ext} -d mongo:2.4")
   return db_exists
 end
 
@@ -70,8 +70,8 @@ def create_server_docker(name, docker_server_name, deploy_port, web_port, db_nam
   files_path = files_path(name)
   FileUtils.mkpath files_path 
   FileUtils.mkpath files_path+'/avatar'
-  exe("docker run -d -p #{deploy_port}:8701 -p #{web_port}:3001 -v #{files_path}:/usr/local/files --name #{docker_server_name} --link #{db_name}:db mh-strong-pm")
-  exe("docker exec #{docker_server_name} chown -R strong-pm:strong-pm /usr/local/files")
+  exef("docker run -d -p #{deploy_port}:8701 -p #{web_port}:3001 -v #{files_path}:/usr/local/files --name #{docker_server_name} --link #{db_name}:db mh-strong-pm")
+  exef("docker exec #{docker_server_name} chown -R strong-pm:strong-pm /usr/local/files")
 end
 
 def remove_docker(name)
@@ -88,21 +88,21 @@ end
 
 def create_slc_service(name)
   config = $config_local['sites'][name]
-  exe("slc ctl -C http://127.0.0.1:#{config['deploy_port']} create #{name}")
+  exef("slc ctl -C http://127.0.0.1:#{config['deploy_port']} create #{name}")
 end
 def remove_slc_service(name)
   config = $config_local['sites'][name]
-  exe("slc ctl -C http://127.0.0.1:#{config['deploy_port']} remove #{name}")
+  exef("slc ctl -C http://127.0.0.1:#{config['deploy_port']} remove #{name}")
 end
 def set_slc_service(name)
   config = $config_local['sites'][name]
-  exe("slc ctl -C http://127.0.0.1:#{config['deploy_port']} env-set #{name} NODE_ENV=production MH_DB_PASSWORD=#{config['db_password']} MH_DB_NAME=#{name} MH_DB_USER=#{name} MH_ROOT_EMAIL='#{config['root_email']}' MH_ROOT_PASSWORD=#{config['root_password']} MH_ROOT_USERNAME=#{config['root_username']}")
-  exe("slc ctl -C http://127.0.0.1:#{config['deploy_port']} set-size #{name} 4")
+  exef("slc ctl -C http://127.0.0.1:#{config['deploy_port']} env-set #{name} NODE_ENV=production MH_DB_PASSWORD=#{config['db_password']} MH_DB_NAME=#{name} MH_DB_USER=#{name} MH_ROOT_EMAIL='#{config['root_email']}' MH_ROOT_PASSWORD=#{config['root_password']} MH_ROOT_USERNAME=#{config['root_username']}")
+  exef("slc ctl -C http://127.0.0.1:#{config['deploy_port']} set-size #{name} 4")
 end
 def build_docker()
   puts "Building docker files".colorize(:blue)
-  exe("cd docker/server && docker build -t mh-strong-pm .")
-  exe("docker pull mongo:2.4")
+  exef("cd docker/server && docker build -t mh-strong-pm .")
+  exef("docker pull mongo:2.4")
 end
 
 

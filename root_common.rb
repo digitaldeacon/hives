@@ -3,7 +3,7 @@ def create_subdomain_plesk(subdomain)
   puts "create subdomain #{subdomain}"
   FileUtils.rm_rf path_subdomain(subdomain)
   FileUtils.mkpath path_subdomain(subdomain)
-  exe("/usr/local/psa/bin/subdomain --create #{subdomain} -domain #{$domain} -www_root #{plesk_path_subdomain(subdomain)}")
+  exef("/usr/local/psa/bin/subdomain --create #{subdomain} -domain #{$domain} -www_root #{plesk_path_subdomain(subdomain)}")
 end
 
 def forward_subdomain_plesk(subdomain, port)
