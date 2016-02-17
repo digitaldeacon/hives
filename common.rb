@@ -22,7 +22,7 @@ def exef(cmd)
   out, err, st = Open3.capture3(cmd)
   puts "#{out}".green
   puts "#{err}".red
-  exit("command failed") if not st.success?
+  abort("command failed") if not st.success?
 end
 
 def exe(cmd)
