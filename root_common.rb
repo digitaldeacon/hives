@@ -33,8 +33,7 @@ end
 
 def remove_subdomain_plesk(subdomain)
   puts "remove subdomain #{subdomain}"
-  domain = "memberhive.com"
-  exe("/usr/local/psa/bin/subdomain --remove #{subdomain} -domain #{domain}")
+  exe("/usr/local/psa/bin/subdomain --remove #{subdomain} -domain #{$domain}")
 end
 
 def subdomain_exists?(name)

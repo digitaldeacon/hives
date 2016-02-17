@@ -18,7 +18,7 @@ def write_local_config()
     f.write(JSON.pretty_generate($config_local))
   end
 end
-def exe(cmd)
+def exef(cmd)
   puts "#{cmd}".green.bold
   out, err, st = Open3.capture3(cmd)
   puts "#{out}".green
@@ -26,7 +26,7 @@ def exe(cmd)
   exit("command failed") if not status.success?
 end
 
-def exe2(cmd)
+def exe(cmd)
   puts "#{cmd}".green.bold
   out, err, st = Open3.capture3(cmd)
   puts "#{out}".green
@@ -88,6 +88,10 @@ end
 def create_slc_service(name)
   config = $config_local['sites'][name]
   exe("slc ctl -C http://127.0.0.1:#{config['deploy_port']} create #{name}")
+end
+def remove_slc_service(name)
+  config = $config_local['sites'][name]
+  exe("slc ctl -C http://127.0.0.1:#{config['deploy_port']} remove #{name}")
 end
 def set_slc_service(name)
   config = $config_local['sites'][name]
