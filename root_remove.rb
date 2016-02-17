@@ -40,3 +40,5 @@ def main()
     puts "No local config for this site".red
   end
 end
+
+main()
