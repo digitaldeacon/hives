@@ -15,6 +15,9 @@ def main()
     end
   end.parse!
   abort("name option not set") if options[:name].nil?
+  
+  name = options[:name]
+  
   if($config_local['sites'].has_key? name)
     
     config = $config_local['sites'][name]
