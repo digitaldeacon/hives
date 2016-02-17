@@ -44,8 +44,9 @@ def create_site(name, config)
     retrys = 0
     while(!exe("docker exec -it #{docker_db_name} mongo #{name} --eval 'db.addUser(\"#{name}\", \"#{db_password}\");'"))
       retrys += 1
+      exe("sleep 1");
       if(retrys > 50)
-        exit("failed to execute mongo")
+        abort("failed to execute mongo")
       end
     end
   end
