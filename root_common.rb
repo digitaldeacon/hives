@@ -6,8 +6,6 @@ end
 
 def create_subdomain_plesk(name)
   puts "create subdomain #{name}"
-  FileUtils.rm_rf path_subdomain(name)
-  FileUtils.mkpath path_subdomain(name)
   exef("/usr/local/psa/bin/subdomain --create #{name} -domain #{$domain} -www_root #{plesk_path_subdomain(name)}")
 end
 
