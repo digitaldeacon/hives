@@ -41,9 +41,12 @@ def create_site(name, config)
   if not create_db_docker(name, docker_db_name) #frist time
     puts "create db and user".blue
     exe("sleep 30")
-    ret = "Error: "
-    while(ret.include? "Error: ")
-      ret = exe("docker exec -it #{docker_db_name} mongo #{name} --eval 'db.addUser(\"#{name}\", \"#{db_password}\");'")
+    retrys = 0
+    while(!exe2("docker exec -it #{docker_db_name} mongo #{name} --eval 'db.addUser(\"#{name}\", \"#{db_password}\");'"))
+      retrys += 1
+      if(retrys > 50)
+        exit("failed to execute mongo")
+      end
     end
   end
   create_server_docker(name, docker_server_name, deploy_port, web_port, docker_db_name)
