@@ -40,6 +40,8 @@ def main()
     if File.exists?(files_path(name))
       FileUtils.rm_rf files_path(name)
     end
+    $config_local['sites'].delete(name)
+    write_local_config()
   else
     puts "No local config for this site".red
   end
