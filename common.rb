@@ -15,7 +15,7 @@ def path_subdomain(name)
 end
 def write_local_config()
   File.open("config_local.json","w") do |f|
-    f.write($config_local.to_json)
+    f.write(JSON.pretty_generate($config_local))
   end
 end
 def exe(cmd)
