@@ -45,6 +45,11 @@ def main()
     write_local_config()
   else
     puts "No local config for this site".red
+    if(subdomain_exists? name)
+      remove_subdomain_plesk(name)
+      FileUtils.rm_rf path_subdomain(name)
+    end
+   
   end
 end
 
