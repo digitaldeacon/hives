@@ -42,7 +42,7 @@ def create_site(name, config)
     puts "create db and user".blue
     exe("sleep 30")
     retrys = 0
-    while(!exe("docker exec -it #{docker_db_name} mongo #{name} --eval 'db.addUser(\"#{name}\", \"#{db_password}\");'"))
+    while(!exe("docker exec -i #{docker_db_name} mongo #{name} --eval 'db.addUser(\"#{name}\", \"#{db_password}\");'"))
       retrys += 1
       exe("sleep 5");
       if(retrys > 50)
