@@ -74,8 +74,10 @@ end
 
 def remove_docker(name)
   config = $config_local['sites'][name]
-  exe("docker stop -t 1 #{config['docker_server_name']} && docker rm #{config['docker_server_name']}")
-  exe("docker stop -t 1 #{config['docker_db_name']} && docker rm #{config['docker_db_name']}")
+  exe("docker stop -t 1 #{config['docker_server_name']}");
+  exe("docker rm #{config['docker_server_name']}")
+  exe("docker stop -t 1 #{config['docker_db_name']}")
+  exe("docker rm #{config['docker_db_name']}")
 end
 
 def stop_docker(name)
