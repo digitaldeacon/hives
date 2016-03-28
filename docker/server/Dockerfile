@@ -1,4 +1,6 @@
 FROM node:4.2
+RUN apt-get update && apt-get install -y \
+        imagemagick \
 
 RUN useradd -ms /bin/bash strong-pm \
     && chown -R strong-pm:strong-pm /usr/local \
