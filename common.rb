@@ -43,7 +43,31 @@ end
 def update_server(name)
   puts "Deploy to server #{name}".blue
   config = $config_local['sites'][name]
-  exef("cd #{$path}/data/code && slc deploy --service=#{name} http://localhost:#{config['deploy_port']} master")
+  deployCmd = "cd #{$path}/data/code && slc deploy --service=#{name} http://localhost:#{config['deploy_port']} master"
+  
+  retrys = 0
+  while(!exe(deployCmd))
+    retrys += 1
+    exe("sleep 5");
+    if(retrys > 5)
+      retrys = -1
+      break;
+    end
+  end
+  if(retrys == -1)
+    remove_slc_service(name)
+    create_slc_service(name)
+    set_slc_service(name)
+  end
+  exe("sleep 5")
+  while(!exe(deployCmd))
+    retrys += 1
+    exe("sleep 5");
+    if(retrys > 5)
+      puts "#{name} is BROKEN";
+      return
+    end
+  end  
 end
 
 
@@ -102,7 +126,7 @@ end
 def build_docker()
   puts "Building docker files".colorize(:blue)
   exef("cd docker/server && docker build -t mh-strong-pm .")
-  exef("docker pull mongo:2.4")
+  exef("docker pull mongo:2.6")
 end
 
 
