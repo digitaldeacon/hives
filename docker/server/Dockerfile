@@ -1,4 +1,4 @@
-FROM node:4.2
+FROM node:4.3
 
 RUN useradd -ms /bin/bash strong-pm \
     && chown -R strong-pm:strong-pm /usr/local \
