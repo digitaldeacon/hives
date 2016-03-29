@@ -49,27 +49,81 @@ def update_server(name)
   while(!exe(deployCmd))
     retrys += 1
     exe("sleep 5");
-    if(retrys > 5)
+    if(retrys > 3)
       retrys = -1
       break;
     end
   end
+  
   if(retrys == -1)
+    puts "TRYING AN RESTART".red
     remove_slc_service(name)
     create_slc_service(name)
     set_slc_service(name)
   end
+  
+  retrys = 0
   exe("sleep 5")
   while(!exe(deployCmd))
     retrys += 1
     exe("sleep 5");
-    if(retrys > 5)
-      puts "#{name} is BROKEN";
-      return
+    if(retrys > 3)
+      retrys == -1
+      break
     end
-  end  
+  end 
+  
+  
+  if(retrys == -1)
+    puts "TRYING AN COMPLETE RESTART".red
+    complete_restart(name)
+  end
+  
+  retrys = 0
+  exe("sleep 5")
+  while(!exe(deployCmd))
+    retrys += 1
+    exe("sleep 5");
+    if(retrys > 3)
+      retrys == -1
+      break
+    end
+  end 
+  
 end
 
+def complete_restart(name)
+  config = $config_local['sites'][name]
+  exe("slc ctl remove #{name}")
+  
+  remove_docker(name)
+  create_db_docker(name, config['docker_db_name'])
+  create_server_docker(
+      name,
+      config['docker_server_name'], 
+      config['deploy_port'], 
+      config['web_port'], 
+      config['docker_db_name']
+    )
+  exe("sleep 10")
+  
+  while(!create_slc_service(name))
+    retrys += 1
+    exe("sleep 5");
+    if(retrys > 10)
+      puts "cannot start slc #{name}"
+      return
+    end
+  end 
+  set_slc_service(name)
+  update_server(name)
+end
+
+def try_deploy(name)
+  config = $config_local['sites'][name]
+  deployCmd = "cd #{$path}/data/code && slc deploy --service=#{name} http://localhost:#{config['deploy_port']} master"
+  return exe(deployCmd)
+end
 
 def create_db_docker(name, docker_db_name)
   puts "Create db server for #{name}".blue
@@ -112,16 +166,16 @@ end
 
 def create_slc_service(name)
   config = $config_local['sites'][name]
-  exef("slc ctl -C http://127.0.0.1:#{config['deploy_port']} create #{name}")
+  return exe("slc ctl -C http://127.0.0.1:#{config['deploy_port']} create #{name}")
 end
 def remove_slc_service(name)
   config = $config_local['sites'][name]
-  exef("slc ctl -C http://127.0.0.1:#{config['deploy_port']} remove #{name}")
+  return exe("slc ctl -C http://127.0.0.1:#{config['deploy_port']} remove #{name}")
 end
 def set_slc_service(name)
   config = $config_local['sites'][name]
   exef("slc ctl -C http://127.0.0.1:#{config['deploy_port']} env-set #{name} NODE_ENV=production MH_DB_PASSWORD=#{config['db_password']} MH_DB_NAME=#{name} MH_DB_USER=#{name} MH_ROOT_EMAIL='#{config['root_email']}' MH_ROOT_PASSWORD=#{config['root_password']} MH_ROOT_USERNAME=#{config['root_username']}")
-  exef("slc ctl -C http://127.0.0.1:#{config['deploy_port']} set-size #{name} 4")
+  return exe("slc ctl -C http://127.0.0.1:#{config['deploy_port']} set-size #{name} 4")
 end
 def build_docker()
   puts "Building docker files".colorize(:blue)
