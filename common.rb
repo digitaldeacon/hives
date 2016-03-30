@@ -7,7 +7,7 @@ $config = JSON.parse(File.read('config.json'))
 $config_local = JSON.parse(File.read('config_local.json'))
 $path = $config_local["path"]
 $domain = "memberhive.com"
-
+$MONGO_VERSION = "mongo:2.6"
 
 def path_subdomain(name)
   "#{$path}/data/subdomains/#{name}"
@@ -67,14 +67,8 @@ def complete_restart(name)
   exe("slc ctl remove #{name}")
   
   remove_docker(name)
-  create_db_docker(name, config['docker_db_name'])
-  create_server_docker(
-      name,
-      config['docker_server_name'], 
-      config['deploy_port'], 
-      config['web_port'], 
-      config['docker_db_name']
-    )
+  create_db_docker(name, )
+  create_server_docker(name)
   exe("sleep 10")
   
   while(!create_slc_service(name))
@@ -92,11 +86,11 @@ end
 def build_docker()
   puts "Building docker files".blue
   exef("cd docker/server && docker build -t mh-strong-pm .")
-  exef("docker pull mongo:2.6")
+  exef("docker pull #{$MONGO_VERSION}")
 end
 
 def create_db_docker(name, docker_db_name)
-  puts "Create db server for #{name}".blue
+  config = $config_local['sites'][name]
   db = db_path(name)
   db_exists = true
   if not File.exists? db
@@ -107,18 +101,18 @@ def create_db_docker(name, docker_db_name)
   if($config["sites"][name].has_key? "exposeDB") 
     ext = "-p 0.0.0.0:#{$config["sites"][name]["exposeDB"]}:27017"
   end
-  exef("docker run -d -v #{db}:/data/db --name #{docker_db_name} #{ext} -d mongo:2.4")
+  exef("docker run -d -v #{db}:/data/db --name #{config['docker_db_name']} #{ext} -d #{$MONGO_VERSION}")
   return db_exists
 end
 
 def create_server_docker(name, docker_server_name, deploy_port, web_port, db_name)
-  puts "Create docker server for #{name}".blue
+  config = $config_local['sites'][name]
   files_path = files_path(name)
   FileUtils.mkpath files_path 
   FileUtils.mkpath files_path+'/avatar'
-  exef("docker run -d -p #{deploy_port}:8701 -p #{web_port}:3001 -v #{files_path}:/usr/local/files --name #{docker_server_name} --link #{db_name}:db mh-strong-pm")
-  exef("docker exec #{docker_server_name} chown -R strong-pm:strong-pm /usr/local/files")
-  exef("docker exec #{docker_server_name} npm config set strict-ssl false")
+  exef("docker run -d -p #{config['deploy_port']}:8701 -p #{config['web_port']}:3001 -v #{files_path}:/usr/local/files --name #{config['docker_server_name']} --link #{config['docker_db_name']}:db mh-strong-pm")
+  exef("docker exec #{config['docker_server_name']} chown -R strong-pm:strong-pm /usr/local/files")
+  exef("docker exec #{config['docker_server_name']} npm config set strict-ssl false")
 end
 
 def remove_docker(name)
