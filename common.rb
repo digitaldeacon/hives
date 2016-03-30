@@ -67,7 +67,7 @@ def complete_restart(name)
   exe("slc ctl remove #{name}")
   
   remove_docker(name)
-  create_db_docker(name, )
+  create_db_docker(name)
   create_server_docker(name)
   exe("sleep 10")
   

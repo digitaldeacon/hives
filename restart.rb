@@ -8,14 +8,8 @@ def main()
   $config_local["sites"].each do |name, config|
     exe("slc ctl remove #{name}")
     remove_docker(name)
-    create_db_docker(name, config['docker_db_name'])
-    create_server_docker(
-      name,
-      config['docker_server_name'], 
-      config['deploy_port'], 
-      config['web_port'], 
-      config['docker_db_name']
-    )
+    create_db_docker(name)
+    create_server_docker(name)
   end
   exe("sleep 10")
   
