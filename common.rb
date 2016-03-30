@@ -7,7 +7,7 @@ $config = JSON.parse(File.read('config.json'))
 $config_local = JSON.parse(File.read('config_local.json'))
 $path = $config_local["path"]
 $domain = "memberhive.com"
-$MONGO_VERSION = "mongo:2.6"
+$MONGO_VERSION = "mongo:2.4"
 
 def path_subdomain(name)
   "#{$path}/data/subdomains/#{name}"
