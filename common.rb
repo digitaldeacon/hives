@@ -105,7 +105,7 @@ def create_db_docker(name, docker_db_name)
   return db_exists
 end
 
-def create_server_docker(name, docker_server_name, deploy_port, web_port, db_name)
+def create_server_docker(name)
   config = $config_local['sites'][name]
   files_path = files_path(name)
   FileUtils.mkpath files_path 
