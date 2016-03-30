@@ -23,11 +23,11 @@ end
 
 def server_running(name)
   config = $config_local['sites'][name]
-  exe("docker top #{config['docker_server_name']}")
+  exe_silent("docker top #{config['docker_server_name']}")
 end
 def db_running(name)
   config = $config_local['sites'][name]
-  exe("docker top #{config['docker_db_name']}")
+  exe_silent("docker top #{config['docker_db_name']}")
 end
 def db_responding(name)
 end

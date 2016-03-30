@@ -32,6 +32,11 @@ def exe(cmd)
   puts "#{err}".red
   return st.success?
 end
+def exe_silent(cmd)
+  out, err, st = Open3.capture3(cmd)
+  return st.success?
+end
+
 
 def db_path(name)
   "#{$path}/data/clients/#{name}/db"
