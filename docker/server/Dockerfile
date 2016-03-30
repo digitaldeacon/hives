@@ -4,8 +4,8 @@ RUN useradd -ms /bin/bash strong-pm \
     && chown -R strong-pm:strong-pm /usr/local \
     && su strong-pm -c "npm install -g strong-pm && npm cache clear" \
     && apt-get update && apt-get install -y imagemagick libkrb5-dev \
-    && npm config set unsafe-perm true \
-    && npm config set strict-ssl false
+    && cd /home/strong-pm && npm config set unsafe-perm true \
+    && cd /home/strong-pm && npm config set strict-ssl false
 
 # Set up some semblance of an environment
 WORKDIR /home/strong-pm
