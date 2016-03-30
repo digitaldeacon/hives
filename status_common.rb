@@ -28,5 +28,6 @@ end
 def db_responding(name)
 end
 def server_responding(name)
-  
+  config = $config_local['sites'][name]
+  get_status_code("http://localhost:#{config['web_port']}").strip == "200" 
 end

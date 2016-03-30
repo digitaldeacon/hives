@@ -27,6 +27,12 @@ def main()
     else
       puts "[#{name}] Deploy Port closed".red
     end
+    
+    if(server_responding(name))
+      puts "[#{name}] Webserver ok".green
+    else
+      puts "[#{name}] webserver not responding".red
+    end
   end
 end
 
