@@ -89,7 +89,7 @@ def build_docker()
   exef("docker pull #{$MONGO_VERSION}")
 end
 
-def create_db_docker(name, docker_db_name)
+def create_db_docker(name)
   config = $config_local['sites'][name]
   db = db_path(name)
   db_exists = true

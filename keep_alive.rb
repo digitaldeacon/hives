@@ -17,7 +17,13 @@ def main()
     end
    
     if(!fine)
-      create_slc_service(name)
+      while(!create_slc_service(name))
+        retrys += 1
+        exe("sleep 5");
+        if(retrys > 5)
+          puts "cannot start slc #{name}"
+        end
+      end 
       set_slc_service(name)
       update_server(name)
     end
