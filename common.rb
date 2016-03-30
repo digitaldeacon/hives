@@ -141,7 +141,7 @@ def create_db_docker(name, docker_db_name)
   if($config["sites"][name].has_key? "exposeDB") 
     ext = "-p 0.0.0.0:#{$config["sites"][name]["exposeDB"]}:27017"
   end
-  exef("docker run -d -v #{db}:/data/db --name #{docker_db_name} #{ext} -d mongo:2.4")
+  exef("docker run --restart=always -d -v #{db}:/data/db --name #{docker_db_name} #{ext} -d mongo:2.4")
   return db_exists
 end
 
@@ -150,7 +150,7 @@ def create_server_docker(name, docker_server_name, deploy_port, web_port, db_nam
   files_path = files_path(name)
   FileUtils.mkpath files_path 
   FileUtils.mkpath files_path+'/avatar'
-  exef("docker run -d -p #{deploy_port}:8701 -p #{web_port}:3001 -v #{files_path}:/usr/local/files --name #{docker_server_name} --link #{db_name}:db mh-strong-pm")
+  exef("docker run --restart=always -d -p #{deploy_port}:8701 -p #{web_port}:3001 -v #{files_path}:/usr/local/files --name #{docker_server_name} --link #{db_name}:db mh-strong-pm")
   exef("docker exec #{docker_server_name} chown -R strong-pm:strong-pm /usr/local/files")
 end
 
