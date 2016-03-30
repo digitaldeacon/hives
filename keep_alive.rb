@@ -22,12 +22,22 @@ def main()
         exe("sleep 5");
         if(retrys > 5)
           puts "cannot start slc #{name}"
+          break
         end
       end 
       set_slc_service(name)
       update_server(name)
     else
-      if(!server_responding(name))
+      retrys = 0
+      rebuild = false
+      while(!server_responding(name))
+        retrys += 1
+        exe("sleep 5");
+        if(retrys > 5)
+          rebuild = true
+        end
+      end 
+      if(rebuild)
         complete_restart(name)
       end
     end
