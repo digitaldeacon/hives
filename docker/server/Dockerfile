@@ -1,8 +1,8 @@
-FROM node:4.4
+FROM node:4.2
 
 RUN useradd -ms /bin/bash strong-pm \
     && chown -R strong-pm:strong-pm /usr/local \
-    && su strong-pm -c "npm install -g strong-pm && npm cache clear" \
+    && su strong-pm -c "npm install -g strong-pm@5.0.1 && npm cache clear" \
     && apt-get update && apt-get install -y imagemagick libkrb5-dev
 
 # Set up some semblance of an environment
