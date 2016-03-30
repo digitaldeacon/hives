@@ -15,7 +15,7 @@ def main()
       create_server_docker(name)
       fine = false
     end
-   
+    retrys = 0
     if(!fine)
       while(!create_slc_service(name))
         retrys += 1
