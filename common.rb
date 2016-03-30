@@ -60,45 +60,6 @@ def update_server(name)
     end
   end
  
-  
-end
-
-def reee(name)
-   
-  if(retrys == -1)
-    puts "TRYING AN RESTART".red
-    remove_slc_service(name)
-    create_slc_service(name)
-    set_slc_service(name)
-  end
-  
-  retrys = 0
-  exe("sleep 5")
-  while(!exe(deployCmd))
-    retrys += 1
-    exe("sleep 5");
-    if(retrys > 3)
-      retrys == -1
-      break
-    end
-  end 
-  
-  
-  if(retrys == -1)
-    puts "TRYING AN COMPLETE RESTART".red
-    complete_restart(name)
-  end
-  
-  retrys = 0
-  exe("sleep 5")
-  while(!exe(deployCmd))
-    retrys += 1
-    exe("sleep 5");
-    if(retrys > 3)
-      retrys == -1
-      break
-    end
-  end
 end
 
 def complete_restart(name)
@@ -128,10 +89,10 @@ def complete_restart(name)
   update_server(name)
 end
 
-def try_deploy(name)
-  config = $config_local['sites'][name]
-  deployCmd = "cd #{$path}/data/code && slc deploy --service=#{name} http://localhost:#{config['deploy_port']} master"
-  return exe(deployCmd)
+def build_docker()
+  puts "Building docker files".blue
+  exef("cd docker/server && docker build -t mh-strong-pm .")
+  exef("docker pull mongo:2.6")
 end
 
 def create_db_docker(name, docker_db_name)
@@ -157,6 +118,7 @@ def create_server_docker(name, docker_server_name, deploy_port, web_port, db_nam
   FileUtils.mkpath files_path+'/avatar'
   exef("docker run -d -p #{deploy_port}:8701 -p #{web_port}:3001 -v #{files_path}:/usr/local/files --name #{docker_server_name} --link #{db_name}:db mh-strong-pm")
   exef("docker exec #{docker_server_name} chown -R strong-pm:strong-pm /usr/local/files")
+  exef("docker exec #{docker_server_name} npm config set strict-ssl false")
 end
 
 def remove_docker(name)
@@ -186,11 +148,7 @@ def set_slc_service(name)
   exe("slc ctl -C http://127.0.0.1:#{config['deploy_port']} env-set #{name} NODE_ENV=production MH_DB_PASSWORD=#{config['db_password']} MH_DB_NAME=#{name} MH_DB_USER=#{name} MH_ROOT_EMAIL='#{config['root_email']}' MH_ROOT_PASSWORD=#{config['root_password']} MH_ROOT_USERNAME=#{config['root_username']}")
   return exe("slc ctl -C http://127.0.0.1:#{config['deploy_port']} set-size #{name} 4")
 end
-def build_docker()
-  puts "Building docker files".colorize(:blue)
-  exef("cd docker/server && docker build -t mh-strong-pm .")
-  exef("docker pull mongo:2.6")
-end
+
 
 
 
