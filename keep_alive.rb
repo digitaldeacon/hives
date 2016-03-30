@@ -26,6 +26,10 @@ def main()
       end 
       set_slc_service(name)
       update_server(name)
+    else
+      if(!server_responding(name))
+        complete_restart(name)
+      end
     end
   end
 end
