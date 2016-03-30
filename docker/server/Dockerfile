@@ -3,9 +3,7 @@ FROM node:4.4
 RUN useradd -ms /bin/bash strong-pm \
     && chown -R strong-pm:strong-pm /usr/local \
     && su strong-pm -c "npm install -g strong-pm && npm cache clear" \
-    && apt-get update && apt-get install -y imagemagick libkrb5-dev \
-    && cd /home/strong-pm && npm config set unsafe-perm true \
-    && cd /home/strong-pm && npm config set strict-ssl false
+    && apt-get update && apt-get install -y imagemagick libkrb5-dev
 
 # Set up some semblance of an environment
 WORKDIR /home/strong-pm
