@@ -116,13 +116,20 @@ def create_server_docker(name)
 end
 
 def remove_docker(name)
+  remove_docker_db(name)
+  remove_docker_server(name)
+end
+
+def remove_docker_server(name)
   config = $config_local['sites'][name]
   exe("docker stop -t 1 #{config['docker_server_name']}");
   exe("docker rm #{config['docker_server_name']}")
+end
+def remove_docker_db(name)
+  config = $config_local['sites'][name]
   exe("docker stop -t 1 #{config['docker_db_name']}")
   exe("docker rm #{config['docker_db_name']}")
 end
-
 def stop_docker(name)
   config = $config_local['sites'][name]
   exe("docker stop -t 1 #{config['docker_server_name']}")
