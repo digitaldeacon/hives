@@ -1,4 +1,4 @@
-require_relative 'status_common'
+require_relative 'common'
 
 def server_running(name)
   config = $config_local['sites'][name]
