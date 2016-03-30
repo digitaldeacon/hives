@@ -54,7 +54,7 @@ def update_server(name)
       break;
     end
   end
-  
+  /*
   if(retrys == -1)
     puts "TRYING AN RESTART".red
     remove_slc_service(name)
@@ -88,7 +88,7 @@ def update_server(name)
       retrys == -1
       break
     end
-  end 
+  end */
   
 end
 
