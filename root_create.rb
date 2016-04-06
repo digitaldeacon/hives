@@ -9,7 +9,7 @@ def create_site(name, config)
   if(not subdomain_exists? name)
     create_subdomain_plesk(name)
   end
-  
+  install_ssl(name)
   deploy_port = $config_local.fetch('deploy_port', 8701)
   web_port = $config_local.fetch('web_port', 10000)
   docker_server_name = "mh-server-"+name
@@ -57,7 +57,7 @@ def create_site(name, config)
   exe("sleep 2")
   update_server(name)
   forward_subdomain_plesk(name, web_port)
-  install_ssl(name)
+
 
 end
 

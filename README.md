@@ -20,5 +20,23 @@ get a shell on the instance
 ```bash
 git clone https://github.com/digitaldeacon/hives.git
 sh install.sh # creates folders and stuff
-sudo ruby root_create.rb
 ```
+Modify the `config.json` to your new configuration
+```json
+{
+  "sites" : {
+    "ecg" : {
+      "name": "Evangeliums Christen Gemeinde Berlin",
+      "resources" : -1
+    }
+  }
+}
+```
+then run `sudo ruby root_create.rb`
+
+# Commands
+
+If you updated `config.json` to have a new site you have to run  `sudo ruby root_create.rb` to create this site as well.
+But if you only want to update the exiting sites you have to run `ruby update.rb`.
+
+To restart and recreate all the instances run `ruby restart.rb`. This also rebuild and updates the docker images.
