@@ -57,6 +57,8 @@ def create_site(name, config)
   exe("sleep 2")
   update_server(name)
   forward_subdomain_plesk(name, web_port)
+  install_ssl(name)
+
 end
 
 def create_docs()

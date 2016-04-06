@@ -32,6 +32,9 @@ ProxyPassReverse / http://localhost:#{port}/"
 end
 
 
+def install_ssl(subdomain)
+  exef("plesk bin extension --exec letsencrypt cli.php run -d #{name}.#{$domain}")
+end
     
 
 def remove_subdomain_plesk(subdomain)
