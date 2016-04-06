@@ -33,7 +33,7 @@ end
 
 
 def install_ssl(subdomain)
-  exef("plesk bin extension --exec letsencrypt cli.php run -d #{name}.#{$domain}")
+  exef("plesk bin extension --exec letsencrypt cli.php run -d #{subdomain}.#{$domain}")
 end
     
 
