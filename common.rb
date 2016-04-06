@@ -111,7 +111,7 @@ def create_server_docker(name)
   FileUtils.mkpath files_path 
   FileUtils.mkpath files_path+'/avatar'
   exef("docker run -d -p #{config['deploy_port']}:8701 -p #{config['web_port']}:3001 -v #{files_path}:/usr/local/files --name #{config['docker_server_name']} --link #{config['docker_db_name']}:db mh-strong-pm")
-  exef("docker exec #{config['docker_server_name']} chown -R strong-pm:strong-pm /usr/local/files")
+  exef("docker exec --user root #{config['docker_server_name']} chown -R strong-pm:strong-pm /usr/local/files")
 end
 
 def remove_docker(name)
