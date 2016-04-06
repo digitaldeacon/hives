@@ -101,7 +101,7 @@ def create_db_docker(name)
   if($config["sites"][name].has_key? "exposeDB") 
     ext = "-p 0.0.0.0:#{$config["sites"][name]["exposeDB"]}:27017"
   end
-  exef("docker run -d -v #{db}:/data/db --name #{config['docker_db_name']} #{ext} -d #{$MONGO_VERSION}")
+  exef("docker run -d -v #{db}:/data/db --name #{config['docker_db_name']} #{ext} -d #{$MONGO_VERSION} --smallfiles")
   return db_exists
 end
 
