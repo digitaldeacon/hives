@@ -13,7 +13,7 @@ def forward_subdomain_plesk(subdomain, port)
     puts "create config #{subdomain}"
 
     http = "
-Redirect permanent / https://#{subdomain}.#{$domain}
+    RedirectMatch permanent ^(?!/\.well-known/acme-challenge/).* https://#{subdomain}.#{$domain}$0
 "
     https = "
 <IfModule mod_headers.c>
