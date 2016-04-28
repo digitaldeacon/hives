@@ -68,6 +68,7 @@ def complete_restart(name)
   
   remove_docker(name)
   create_db_docker(name)
+  exe("sleep 5")
   create_server_docker(name)
   exe("sleep 10")
   
@@ -99,7 +100,7 @@ def create_db_docker(name)
   end
   ext = ""
   if($config["sites"][name].has_key? "exposeDB") 
-    ext = "-p 0.0.0.0:#{$config["sites"][name]["exposeDB"]}:27017"
+    ext = "-p 0.0.0.0:#{$config["sites"][name]["exposeDB"]}:27017" #this exposes the port to public internet
   end
   exef("docker run -d -v #{db}:/data/db --name #{config['docker_db_name']} #{ext} -d #{$MONGO_VERSION} --smallfiles")
   return db_exists
