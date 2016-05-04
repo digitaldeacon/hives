@@ -95,7 +95,7 @@ def build_docker()
 end
 
 def create_docker(name)
-  config = $config_local['sites'][name]+
+  config = $config_local['sites'][name]
   prepare_db(name)
   prepare_server(name)
   
