@@ -124,7 +124,7 @@ def create_docker(name)
   end
   
   composer = {
-    'version' => 2,
+    'version' => '2',
     'services' => {
       'server' => server,
       'db' => db
