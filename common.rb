@@ -107,7 +107,7 @@ def create_docker(name)
       "127.0.0.1:#{config['deploy_port']}:8701",
       "127.0.0.1:#{config['web_port']}:3001"
     ],
-    'volumes' => ["#{files_path}:/usr/local/files"],
+    'volumes' => ["#{files_path(name)}:/usr/local/files"],
     'links' => ["db"]
   }
   db = {
@@ -115,7 +115,7 @@ def create_docker(name)
     'container_name' => config['docker_db_name'],
     'ports' => [
     ],
-    'volumes' => ["#{db}:/data/db"],
+    'volumes' => ["#{db_path(name)}:/data/db"],
     'command' => '--smallfiles'
   }
   
