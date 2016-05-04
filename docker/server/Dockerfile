@@ -8,7 +8,7 @@ RUN useradd -ms /bin/bash strong-pm \
 # Set up some semblance of an environment
 WORKDIR /home/strong-pm
 ENV HOME=/home/strong-pm PORT=3000
-
+COPY ./etc/ImageMagick/policy.xml /etc/ImageMagick/policy.xm
 # Run as non-privileged user inside container
 USER strong-pm
 

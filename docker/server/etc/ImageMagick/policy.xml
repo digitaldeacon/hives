@@ -1,0 +1,15 @@
+<policymap>
+  <policy domain="coder" rights="none" pattern="EPHEMERAL" />
+  <policy domain="coder" rights="none" pattern="URL" />
+  <policy domain="coder" rights="none" pattern="HTTPS" />
+  <policy domain="coder" rights="none" pattern="HTTP" />
+  <policy domain="coder" rights="none" pattern="MVG" />
+  <policy domain="coder" rights="none" pattern="MSL" />
+    
+  <policy domain="resource" name="memory" value="512MiB"/>
+  <policy domain="resource" name="file" value="100"/>
+  <policy domain="resource" name="thread" value="4"/>
+  <policy domain="resource" name="thread" value="4"/>
+  <policy domain="delegate" rights="none" pattern="mpeg:decode" />
+
+</policymap>
