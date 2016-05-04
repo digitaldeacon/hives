@@ -1,6 +1,7 @@
 require 'json'
-require 'fileutils'#
+require 'fileutils'
 require 'open3'
+require 'yaml'
 require_relative 'ext/colorize'
 
 $config = JSON.parse(File.read('config.json'))
@@ -43,6 +44,9 @@ def db_path(name)
 end
 def files_path(name)
   "#{$path}/data/clients/#{name}/files"
+end
+def data_path(name)
+  "#{$path}/data/clients/#{name}"
 end
 
 def update_server(name)
@@ -90,29 +94,60 @@ def build_docker()
   exef("docker pull #{$MONGO_VERSION}")
 end
 
-def create_db_docker(name)
-  config = $config_local['sites'][name]
+def create_docker(name)
+  config = $config_local['sites'][name]+
+  prepare_db(db)
+  prepare_server(db)
+  
+  server = {
+    'image' => 'mh-strong-pm',
+    'container_name' => config['docker_server_name'],
+    'depends_on' => ['db'],
+    'ports' => [
+      "127.0.0.1:#{config['deploy_port']}:8701",
+      "127.0.0.1:#{config['web_port']}:3001"
+    ],
+    'volumes' => ["#{files_path}:/usr/local/files"],
+    'links' => ["db"]
+  }
+  db = {
+    'image' => $MONGO_VERSION,
+    'container_name' => config['docker_db_name'],
+    'ports' => [
+    ],
+    'volumes' => ["#{db}:/data/db"],
+    'command' => '--smallfiles'
+  }
+  
+  if($config["sites"][name].has_key? "exposeDB") 
+   db['ports'] = ["0.0.0.0:#{config["exposeDB"]}:27017"];
+  end
+  
+  composer = {
+    'version' => 2,
+    'services' => {
+      'server' => server,
+      'db' => db
+    }
+  }
+  File.open(data_path(name)+'/docker-compose.yml', 'w') {|f| f.write composer.to_yaml }
+  exef("cd #{data_path(name)} && docker-compose up -d")
+  exef("docker exec --user root #{config['docker_server_name']} chown -R strong-pm:strong-pm /usr/local/files")
+end
+
+def prepare_db(name)
   db = db_path(name)
   db_exists = true
   if not File.exists? db
     db_exists = false
     FileUtils.mkpath db
   end
-  ext = ""
-  if($config["sites"][name].has_key? "exposeDB") 
-    ext = "-p 0.0.0.0:#{$config["sites"][name]["exposeDB"]}:27017" #this exposes the port to public internet
-  end
-  exef("docker run -d -v #{db}:/data/db --name #{config['docker_db_name']} #{ext} -d #{$MONGO_VERSION} --smallfiles")
   return db_exists
 end
-
-def create_server_docker(name)
-  config = $config_local['sites'][name]
+def prepare_server(name)
   files_path = files_path(name)
   FileUtils.mkpath files_path 
   FileUtils.mkpath files_path+'/avatar'
-  exef("docker run -d -p 127.0.0.1:#{config['deploy_port']}:8701 -p 127.0.0.1:#{config['web_port']}:3001 -v #{files_path}:/usr/local/files --name #{config['docker_server_name']} --link #{config['docker_db_name']}:db mh-strong-pm")
-  exef("docker exec --user root #{config['docker_server_name']} chown -R strong-pm:strong-pm /usr/local/files")
 end
 
 def remove_docker(name)
