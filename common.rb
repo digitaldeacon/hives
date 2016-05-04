@@ -96,8 +96,8 @@ end
 
 def create_docker(name)
   config = $config_local['sites'][name]+
-  prepare_db(db)
-  prepare_server(db)
+  prepare_db(name)
+  prepare_server(name)
   
   server = {
     'image' => 'mh-strong-pm',
