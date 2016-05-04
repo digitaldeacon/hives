@@ -96,6 +96,7 @@ end
 
 def create_docker(name)
   config = $config_local['sites'][name]
+  globalConfig = $config['sites'][name]
   prepare_db(name)
   prepare_server(name)
   
@@ -119,8 +120,8 @@ def create_docker(name)
     'command' => '--smallfiles'
   }
   
-  if($config["sites"][name].has_key? "exposeDB") 
-   db['ports'] = ["0.0.0.0:#{config["exposeDB"]}:27017"];
+  if(globalConfig.has_key? "exposeDB") 
+   db['ports'] = ["0.0.0.0:#{globalConfig["exposeDB"]}:27017"];
   end
   
   composer = {
