@@ -37,8 +37,9 @@ def create_site(name, config)
   $config_local['deploy_port'] = deploy_port+1;
   $config_local['web_port'] = web_port+1;
   write_local_config()
+
   # start docker with loopback
-  if not create_db_docker(name) #frist time
+  if not create_docker(name) #frist time
     puts "create db and user".blue
     exe("sleep 30")
     retrys = 0
@@ -50,8 +51,7 @@ def create_site(name, config)
       end
     end
   end
-  create_server_docker(name)
-  exe("sleep 2")
+
   create_slc_service(name)
   set_slc_service(name)
   exe("sleep 2")

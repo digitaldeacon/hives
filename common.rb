@@ -97,7 +97,7 @@ end
 def create_docker(name)
   config = $config_local['sites'][name]
   globalConfig = $config['sites'][name]
-  prepare_db(name)
+  db_exists = prepare_db(name)
   prepare_server(name)
   
   server = {
@@ -133,7 +133,9 @@ def create_docker(name)
   }
   File.open(data_path(name)+'/docker-compose.yml', 'w') {|f| f.write composer.to_yaml }
   exef("cd #{data_path(name)} && docker-compose up -d")
+
   exef("docker exec --user root #{config['docker_server_name']} chown -R strong-pm:strong-pm /usr/local/files")
+  return db_exists
 end
 
 def prepare_db(name)
