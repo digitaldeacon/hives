@@ -38,3 +38,6 @@ build/
 config.json
 config_local.json
 .vscode/
+
+data/
+data_backup/
