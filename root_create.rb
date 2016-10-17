@@ -7,7 +7,7 @@ def create_site(name, config)
   puts "creating site #{name}".blue
   
   update_subdomain_plesk(name)
-  exe("chown -r #{$owner} #{$path}")
+  exe("chown -R #{$owner} #{$path}")
   install_ssl(name)
   
   deploy_port = $config_local.fetch('deploy_port', 8701)
