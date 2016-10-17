@@ -1,6 +1,6 @@
 require_relative 'common'
 #
-puts "------ Restart all stuff ---------"
+puts "------ Restart all stuff ---------".blue
 
 
 def main()
