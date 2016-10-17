@@ -16,6 +16,18 @@ show console output
 get a shell on the instance
 ```docker exec -it mh-server-$NAME bash```
 
+get a root shell on the instace
+``` docker exec -it -u root mh-server-$NAME bash```
+
+install mongo on the docker server instance
+`apt-get install mongodb`
+
+connect to the mongo instance
+`mongo mg-db-$NAME:27017/$NAME -u $NAME -p $PASSWORD`
+
+Mongo Commands
+ + show collections
+
 # Install
 ```bash
 git clone https://github.com/digitaldeacon/hives.git
