@@ -11,8 +11,6 @@ def create_site(name, config)
   exe("chown -R #{$owner} #{$path}")
   install_ssl(name)
   forward_subdomain_plesk(name, config['web_port'])
-  
-  exe("c")
 end
 
 def create_docs()
