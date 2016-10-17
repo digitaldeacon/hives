@@ -14,7 +14,7 @@ end
 def update_subdomain_plesk(name)
   puts "Update Subdomain #{name}".blue
   remove_subdomain_plesk(name)
-  create_subdomain_plesk()
+  create_subdomain_plesk(name)
 end
 
 def forward_subdomain_plesk(subdomain, port)
