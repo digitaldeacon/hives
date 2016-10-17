@@ -4,6 +4,8 @@ require 'open3'
 require 'yaml'
 require_relative 'ext/colorize'
 
+# This is not a script.
+
 $config = JSON.parse(File.read('config.json'))
 $config_local = JSON.parse(File.read('config_local.json'))
 $path = $config_local["path"]
@@ -13,11 +15,13 @@ $MONGO_VERSION = "mongo:2.4"
 def path_subdomain(name)
   "#{$path}/data/subdomains/#{name}"
 end
+
 def write_local_config()
   File.open("config_local.json","w") do |f|
     f.write(JSON.pretty_generate($config_local))
   end
 end
+
 def exef(cmd)
   puts "#{cmd}".green.bold
   out, err, st = Open3.capture3(cmd)

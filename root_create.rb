@@ -6,10 +6,10 @@ require_relative 'root_common'
 def create_site(name, config)
   puts "creating site #{name}".blue
   
-  if(not subdomain_exists? name)
-    create_subdomain_plesk(name)
-  end
+  update_subdomain_plesk(name)
+  exe("chown -r #{$owner} #{$path}")
   install_ssl(name)
+  
   deploy_port = $config_local.fetch('deploy_port', 8701)
   web_port = $config_local.fetch('web_port', 10000)
   docker_server_name = "mh-server-"+name
@@ -62,16 +62,18 @@ def create_site(name, config)
 end
 
 def create_docs()
-  if(not subdomain_exists? "client-docs")
-    create_subdomain_plesk("client-docs")
-  end
+   update_subdomain_plesk("client-docs")
 end
 
 def main()
+  raise 'Must run as root' unless Process.uid == 0
+  
   puts "Boostraping environment".blue
+
   if not $config_local.has_key? 'docker_build'
     build_docker();
   end
+  
   $config_local['docker_build'] = true
   $config["sites"].each do |name, config|
     if not $config_local.has_key? "sites" or not $config_local["sites"].has_key? name

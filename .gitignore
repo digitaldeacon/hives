@@ -37,3 +37,4 @@ build/
 /git
 config.json
 config_local.json
+.vscode/

@@ -6,6 +6,7 @@ require_relative 'root_common'
 
 
 def main()
+  raise 'Must run as root' unless Process.uid == 0
   options = {}
   OptionParser.new do |opts|
     opts.banner = "Usage: root_remove.rb [options]"

@@ -1,12 +1,20 @@
 $domain = "memberhive.com"
 
+$owner = "memberhive:psacln"
+
 def plesk_path_subdomain(name)
   "/hives/data/subdomains/#{name}"
 end
 
 def create_subdomain_plesk(name)
-  puts "create subdomain #{name}"
+  puts "Create Dubdomain #{name}".blue
   exef("/usr/local/psa/bin/subdomain --create #{name} -domain #{$domain} -www_root httpdocs/")
+end
+
+def update_subdomain_plesk(name)
+  puts "Update Subdomain #{name}".blue
+  remove_subdomain_plesk(name)
+  create_subdomain_plesk()
 end
 
 def forward_subdomain_plesk(subdomain, port)
@@ -42,8 +50,7 @@ def remove_subdomain_plesk(subdomain)
   exe("/usr/local/psa/bin/subdomain --remove #{subdomain} -domain #{$domain}")
 end
 
-def subdomain_exists?(name)
-  File.exists?(path_subdomain(name))
-end
-
+def set_rights()
+ 
+ end
 
