@@ -1,11 +1,11 @@
 # Hives
-Manage serveral memberhive instances
+Manage serveral memberhive instances for either Version 1 or 2
 
 # Requirements
  + ruby >= 2.1.3
  + docker >= 1.7.0
  + git
-
+ 
 Currently the only supported host manager is plesk. We use plesk to create subdomains and the configurations of the hosts.
 In the future we will support at least spinning up digitalocean instances and configuring them.
 
@@ -19,6 +19,7 @@ get a shell on the instance
 get a root shell on the instace
 ``` docker exec -it -u root mh-server-$NAME bash```
 
+## MHv1
 install mongo on the docker server instance
 `apt-get install mongodb`
 
@@ -27,6 +28,10 @@ connect to the mongo instance
 
 Mongo Commands
  + show collections
+ 
+ ##MHv2
+ install mysql on the docker server instance
+ 
 
 # Install
 ```bash
@@ -39,7 +44,8 @@ Modify the `config.json` to your new configuration
   "sites" : {
     "ecg" : {
       "name": "Evangeliums Christen Gemeinde Berlin",
-      "resources" : -1
+      "resources" : -1,
+      "version": 1
     }
   }
 }
