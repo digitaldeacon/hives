@@ -26,7 +26,7 @@ def main()
   build_docker()
   
   $config_local['docker_build'] = true
-  $config["sites"].each do |name, config|
+  $config_local["sites"].each do |name, config|
     create_site(name, config)
   end
   

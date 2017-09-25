@@ -38,6 +38,7 @@ build/
 config.json
 config_local.json
 .vscode/
+.idea/
 
 data/
 data_backup/
