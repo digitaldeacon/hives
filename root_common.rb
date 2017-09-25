@@ -18,7 +18,7 @@ def update_subdomain_plesk(name)
 end
 
 def forward_subdomain_plesk(subdomain, port)
-    puts "create config #{subdomain}"
+    puts "create config #{subdomain} on #{port}"
 
     http = "
     RedirectMatch permanent ^(?!/\.well-known/acme-challenge/).* https://#{subdomain}.#{$domain}$0

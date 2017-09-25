@@ -52,6 +52,11 @@ Modify the `config.json` to your new configuration
 ```
 then run `sudo ruby root_create.rb`
 
+# Deploy
+
++ Push to git
++ Pull on webserver
+
 # Commands
 
 If you updated `config.json` to have a new site you have to run  `sudo ruby root_create.rb` to create this site as well.

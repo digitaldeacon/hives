@@ -1,11 +1,13 @@
 require 'json'
 require 'fileutils'
+require 'pp'
 require_relative 'common'
 require_relative 'root_common'
 
 # this recreated a site after a move to diffenent server
 def create_site(name, config)
   puts "creating site #{name}".blue
+  pp config
   
   update_subdomain_plesk(name)
   exe("chown -R #{$owner} #{$path}")
